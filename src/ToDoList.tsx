@@ -14,15 +14,25 @@ function ToDoList() {
     watch,
     handleSubmit,
     formState: { errors },
+    setError,
+    setValue,
   } = useForm<IForm>({
-      defaultValues: {
-          email: "~@naver.com"
-      }
+    defaultValues: {
+      email: "~@naver.com",
+    },
   });
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IForm) => {
+    if (data.password !== data.pwConfirmation) {
+      setError(
+        "pwConfirmation",
+        { message: "Password are not the same" },
+        { shouldFocus: true }
+      );
+    }
+    else {
+        setValue("todo", "");
+    }
   };
-  console.log(errors);
   /*
     const [toDo, setToDo] = useState("");
     const onChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -46,6 +56,11 @@ function ToDoList() {
           {...register("todo", {
             required: "Todo is required",
             minLength: { value: 5, message: "Todo is too short" },
+            validate: {
+              noHello: (value) =>
+                !value.includes("hello") || "No hello allowed",
+              noHi: (value) => !value.includes("hi") || "No hi allowed",
+            },
           })}
           placeholder="Write a to do"
         />
@@ -60,7 +75,7 @@ function ToDoList() {
           })}
           placeholder="Email"
         />
-        <span>{errors?.email?.message}</span>
+        <span>{errors.email?.message}</span>
         <input
           {...register("password", {
             required: "Password is required",
