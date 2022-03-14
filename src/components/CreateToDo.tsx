@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
-import { toDosState } from "../atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { categoryState, toDosState } from "../atom";
 
 interface IForm {
   toDo: string;
@@ -14,26 +14,19 @@ function CreateToDo() {
       setValue,
     } = useForm<IForm>();
     const setToDos = useSetRecoilState(toDosState);
+    const category = useRecoilValue(categoryState);
     const onValid = ({ toDo }: IForm) => {
-      setToDos((prev) => [
-        { text: toDo, id: Date.now(), category: "TO_DO" },
-        ...prev,
-      ]);
+      setToDos((prev) => [{ text: toDo, id: Date.now(), category }, ...prev]);
       setValue("toDo", "");
     };
     return (
       <form onSubmit={handleSubmit(onValid)}>
         <input
           {...register("toDo", {
-            required: "Todo is required",
-            minLength: { value: 5, message: "Todo is too short" },
-            validate: {
-              noHello: (value) =>
-                !value.includes("hello") || "No hello allowed",
-              noHi: (value) => !value.includes("hi") || "No hi allowed",
-            },
+            required: "Contents are required",
+            minLength: { value: 5, message: "Contents are too short" },
           })}
-          placeholder="Write a to do"
+          placeholder={`Write a ${category.toLowerCase()}`}
         />
         <span>{errors.toDo?.message}</span>
         <button>Add</button>

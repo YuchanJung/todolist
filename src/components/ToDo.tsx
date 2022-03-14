@@ -1,6 +1,6 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
-import { IToDo, toDosState } from "../atom";
+import { categories, IToDo, toDosState } from "../atom";
 
 function ToDo({ text, category, id }: IToDo) {
   const setToDos = useSetRecoilState(toDosState);
@@ -10,7 +10,7 @@ function ToDo({ text, category, id }: IToDo) {
     } = event;
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
-      const newToDo = { text, id, category: name as "TO_DO" | "DOING" | "DONE" };
+      const newToDo = { text, id, category: name as categories };
       return [
         ...oldToDos.slice(0, targetIndex),
         newToDo,
