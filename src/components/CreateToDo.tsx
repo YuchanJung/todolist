@@ -1,6 +1,20 @@
 import { useForm } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import styled from "styled-components";
 import { categoryState, toDosState } from "../atom";
+
+const ToDoInputter = styled.input`
+  width: 40vh;
+  height: 25px;
+  border-radius: 15px;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0px;
+`;
 
 interface IForm {
   toDo: string;
@@ -20,17 +34,19 @@ function CreateToDo() {
       setValue("toDo", "");
     };
     return (
-      <form onSubmit={handleSubmit(onValid)}>
-        <input
-          {...register("toDo", {
-            required: "Contents are required",
-            minLength: { value: 5, message: "Contents are too short" },
-          })}
-          placeholder={`Write a ${category.toLowerCase()}`}
-        />
-        <span>{errors.toDo?.message}</span>
-        <button>Add</button>
-      </form>
+      <InputContainer>
+        <form onSubmit={handleSubmit(onValid)}>
+          <ToDoInputter
+            {...register("toDo", {
+              required: "Contents are required",
+              minLength: { value: 5, message: "Contents are too short" },
+            })}
+            placeholder={`Write a ${category.toLowerCase()}`}
+          />
+          {/* <span>{errors.toDo?.message}</span> */}
+          <button>Add</button>
+        </form>
+      </InputContainer>
     );
 }
 

@@ -22,11 +22,6 @@ const Title = styled.h1`
   font-size: 36px;
   margin: 10px 0px;
 `
-const InputContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const ToDoContainer = styled.div`
   display: flex;
@@ -47,9 +42,7 @@ function ToDoList() {
     <Container>
       <Header>
         <Title>To Do List</Title>
-        <InputContainer>
-          <CreateToDo />
-        </InputContainer>
+        <CreateToDo />
       </Header>
       <hr />
       <select value={category} onInput={onInput}>
