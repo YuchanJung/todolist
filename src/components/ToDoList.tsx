@@ -5,6 +5,29 @@ import { Categories, categoryState, toDosSelector } from "../atom";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
+const Container = styled.div`
+  max-width: 420px;
+  margin: 0 auto;
+`;
+
+const Header = styled.header`
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Title = styled.h1`
+  font-size: 36px;
+  margin: 10px 0px;
+`
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const ToDoContainer = styled.div`
   display: flex;
   div {
@@ -21,19 +44,23 @@ function ToDoList() {
   };
   console.log(category);
   return (
-    <div>
-      <h1>To Dos</h1>
+    <Container>
+      <Header>
+        <Title>To Do List</Title>
+        <InputContainer>
+          <CreateToDo />
+        </InputContainer>
+      </Header>
       <hr />
       <select value={category} onInput={onInput}>
         <option value={Categories.TO_DO}>ToDo</option>
         <option value={Categories.DOING}>Doing</option>
         <option value={Categories.DONE}>Done</option>
       </select>
-      <CreateToDo />
       {toDos.map((toDo) => (
         <ToDo key={toDo.id} {...toDo} />
       ))}
-    </div>
+    </Container>
   );
 }
 
