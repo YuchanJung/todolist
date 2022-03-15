@@ -3,18 +3,59 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { categoryState, toDosState } from "../atom";
 
-const ToDoInputter = styled.input`
-  width: 40vh;
-  height: 25px;
-  border-radius: 15px;
+const InputContainer = styled.div`
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0px;
+    input {
+      width: 40vh;
+      height: 30px;
+      font-size: 15px;
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      border-radius: 15px;
+      border-color: transparent;
+      margin-right: 7px;
+    }
+  }
 `;
 
-const InputContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 5px 0px;
+const CreateBtn = styled.button`
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  border-color: transparent;
+
+  &:after {
+    width: 18px;
+    height: 4px;
+    left: 4px;
+    top: 11px;
+  }
+
+  &:before {
+    width: 4px;
+    height: 18px;
+    left: 11px;
+    top: 4px;
+  }
+  position: relative;
+  
+  &:after,
+  &:before {
+    content: "";
+    position: absolute;
+    background: ${(props) => props.theme.bgColor};
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
 `;
+
 
 interface IForm {
   toDo: string;
@@ -36,16 +77,16 @@ function CreateToDo() {
     return (
       <InputContainer>
         <form onSubmit={handleSubmit(onValid)}>
-          <ToDoInputter
+          <input
             {...register("toDo", {
               required: "Contents are required",
               minLength: { value: 5, message: "Contents are too short" },
             })}
             placeholder={`Write a ${category.toLowerCase()}`}
           />
-          {/* <span>{errors.toDo?.message}</span> */}
-          <button>Add</button>
+          <CreateBtn />
         </form>
+        <span>{errors.toDo?.message}</span>
       </InputContainer>
     );
 }

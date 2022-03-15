@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  height: 15vh;
+  height: 20vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,8 +19,8 @@ const Header = styled.header`
 `;
 
 const Title = styled.h1`
-  font-size: 36px;
-  margin: 10px 0px;
+  font-size: 42px;
+  margin: 15px 0px;
 `
 
 const ToDoContainer = styled.div`
