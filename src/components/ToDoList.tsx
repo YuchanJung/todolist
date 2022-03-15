@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { Categories, categoryState, toDosSelector } from "../atom";
 import CreateToDo from "./CreateToDo";
+import SelectCategory from "./SelectCategory";
 import ToDo from "./ToDo";
 
 const Container = styled.div`
@@ -19,25 +20,22 @@ const Header = styled.header`
 `;
 
 const Title = styled.h1`
-  font-size: 42px;
+  font-size: 45px;
   margin: 15px 0px;
 `
 
-const ToDoContainer = styled.div`
+const Body = styled.div`
+  min-height: 20vh;
   display: flex;
-  div {
-    text-align: center;
-    width: 250px;
-  }
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.theme.cardBgColor};
 `;
 
-function ToDoList() {
+function WholeList() {
   const toDos = useRecoilValue(toDosSelector);
-  const [category, setCategory] = useRecoilState(categoryState);
-  const onInput = (event:React.FormEvent<HTMLSelectElement>) => {
-    setCategory(event.currentTarget.value as Categories);
-  };
-  console.log(category);
+  console.log(toDos);
   return (
     <Container>
       <Header>
@@ -45,16 +43,14 @@ function ToDoList() {
         <CreateToDo />
       </Header>
       <hr />
-      <select value={category} onInput={onInput}>
-        <option value={Categories.TO_DO}>ToDo</option>
-        <option value={Categories.DOING}>Doing</option>
-        <option value={Categories.DONE}>Done</option>
-      </select>
-      {toDos.map((toDo) => (
-        <ToDo key={toDo.id} {...toDo} />
-      ))}
+      <SelectCategory />
+      <Body>
+        {toDos.map((toDo) => (
+          <ToDo key={toDo.id} {...toDo} />
+        ))}
+      </Body>
     </Container>
   );
 }
 
-export default ToDoList;
+export default WholeList;

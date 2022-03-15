@@ -1,6 +1,11 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
+import styled from "styled-components";
 import { Categories, IToDo, toDosState } from "../atom";
+
+const ToDoContainer = styled.div`
+  width: 90%;
+`;
 
 function ToDo({ text, category, id }: IToDo) {
   const setToDos = useSetRecoilState(toDosState);
@@ -11,15 +16,21 @@ function ToDo({ text, category, id }: IToDo) {
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
       const newToDo = { text, id, category: name as Categories };
-      return [
-        ...oldToDos.slice(0, targetIndex),
-        newToDo,
-        ...oldToDos.slice(targetIndex + 1),
-      ];
+      // console.log(newToDo) -> error handling
+      return name !== "DELETE"
+        ? [
+            ...oldToDos.slice(0, targetIndex),
+            newToDo,
+            ...oldToDos.slice(targetIndex + 1),
+          ]
+        : [
+            ...oldToDos.slice(0, targetIndex),
+            ...oldToDos.slice(targetIndex + 1),
+          ];
     });
   };
   return (
-    <li>
+    <ToDoContainer>
       <span>{text}</span>
       {category !== Categories.TO_DO && (
         <button name={Categories.TO_DO} onClick={onClick}>
@@ -36,7 +47,10 @@ function ToDo({ text, category, id }: IToDo) {
           Done
         </button>
       )}
-    </li>
+      <button name="DELETE" onClick={onClick}>
+        Delete
+      </button>
+    </ToDoContainer>
   );
 }
 

@@ -4,13 +4,15 @@ import styled from "styled-components";
 import { categoryState, toDosState } from "../atom";
 
 const InputContainer = styled.div`
+  width: 90%;
+  height: 50px;
   form {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 5px 0px;
     input {
-      width: 40vh;
+      width: 90%;
       height: 30px;
       font-size: 15px;
       -webkit-border-radius: 15px;
@@ -19,6 +21,9 @@ const InputContainer = styled.div`
       border-color: transparent;
       margin-right: 7px;
     }
+  }
+  span {
+    font-size: 12px;
   }
 `;
 
