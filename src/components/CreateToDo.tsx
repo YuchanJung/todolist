@@ -18,7 +18,8 @@ const InputContainer = styled.div`
       -webkit-border-radius: 15px;
       -moz-border-radius: 15px;
       border-radius: 15px;
-      border-color: transparent;
+      background-color: transparent;
+      border-color: ${(props) => props.theme.bgColor};
       margin-right: 7px;
     }
   }
@@ -33,7 +34,7 @@ const CreateBtn = styled.button`
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  border-color: transparent;
+  border-color: ${props => props.theme.textColor};
 
   &:after {
     width: 18px;
@@ -54,7 +55,7 @@ const CreateBtn = styled.button`
   &:before {
     content: "";
     position: absolute;
-    background: ${(props) => props.theme.bgColor};
+    background: ${(props) => props.theme.textColor};
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;

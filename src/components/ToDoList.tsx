@@ -1,14 +1,16 @@
-import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { Categories, categoryState, toDosSelector } from "../atom";
+import { toDosSelector } from "../atom";
 import CreateToDo from "./CreateToDo";
 import SelectCategory from "./SelectCategory";
 import ToDo from "./ToDo";
 
 const Container = styled.div`
-  max-width: 420px;
-  margin: 0 auto;
+  width: 380px;
+  height: 500px;
+  border-radius: 20px;
+  background-color: ${(props) => props.theme.cardBgColor};
+  box-shadow: 5px 5px 5px ${(props) => props.theme.cardShadowColor};
 `;
 
 const Header = styled.header`
@@ -22,7 +24,7 @@ const Header = styled.header`
 const Title = styled.h1`
   font-size: 45px;
   margin: 15px 0px;
-`
+`;
 
 const Body = styled.div`
   min-height: 20vh;
@@ -30,7 +32,7 @@ const Body = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.theme.cardBgColor};
+  background-color: ${(props) => props.theme.cardBgColor};
 `;
 
 function WholeList() {
