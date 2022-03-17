@@ -6,25 +6,28 @@ import { categoryState, toDosState } from "../atom";
 const InputContainer = styled.div`
   width: 90%;
   height: 50px;
-  form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5px 0px;
-    input {
-      width: 90%;
-      height: 30px;
-      font-size: 15px;
-      -webkit-border-radius: 15px;
-      -moz-border-radius: 15px;
-      border-radius: 15px;
-      background-color: transparent;
-      border-color: ${(props) => props.theme.bgColor};
-      margin-right: 7px;
-    }
-  }
   span {
     font-size: 12px;
+  }
+`;
+
+const ToDoForm = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0px;
+`;
+
+const ToDoInput = styled.input`
+  width: 90%;
+  height: 30px;
+  font-size: 15px;
+  background-color: transparent;
+  border-width: 0 0 2px;
+  border-color: ${(props) => props.theme.textColor};
+  margin-right: 7px;
+  :focus {
+      outline: none;
   }
 `;
 
@@ -34,7 +37,7 @@ const CreateBtn = styled.button`
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  border-color: ${props => props.theme.textColor};
+  border-color: ${(props) => props.theme.textColor};
 
   &:after {
     width: 18px;
@@ -50,7 +53,7 @@ const CreateBtn = styled.button`
     top: 4px;
   }
   position: relative;
-  
+
   &:after,
   &:before {
     content: "";
@@ -82,8 +85,8 @@ function CreateToDo() {
     };
     return (
       <InputContainer>
-        <form onSubmit={handleSubmit(onValid)}>
-          <input
+        <ToDoForm onSubmit={handleSubmit(onValid)}>
+          <ToDoInput
             {...register("toDo", {
               required: "Contents are required",
               minLength: { value: 5, message: "Contents are too short" },
@@ -91,7 +94,7 @@ function CreateToDo() {
             placeholder={`Write a ${category.toLowerCase()}`}
           />
           <CreateBtn />
-        </form>
+        </ToDoForm>
         <span>{errors.toDo?.message}</span>
       </InputContainer>
     );

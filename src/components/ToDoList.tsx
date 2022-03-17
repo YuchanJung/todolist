@@ -22,6 +22,7 @@ const Header = styled.header`
 `;
 
 const Title = styled.h1`
+  font-family: 'Roboto Slab', serif;
   font-size: 45px;
   margin: 15px 0px;
 `;
