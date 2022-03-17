@@ -13,5 +13,5 @@ export const lightTheme: DefaultTheme = {
     textColor: "black",
     accentColor: "#8c7ae6",
     cardBgColor: "whitesmoke",
-    cardShadowColor: "#dcdde1"
+    cardShadowColor: "#bdc3c7"
 };

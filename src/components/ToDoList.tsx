@@ -10,7 +10,7 @@ const Container = styled.div`
   height: 500px;
   border-radius: 20px;
   background-color: ${(props) => props.theme.cardBgColor};
-  box-shadow: 5px 5px 10px ${(props) => props.theme.cardShadowColor};
+  box-shadow: -2px 4px 20px 4px ${(props) => props.theme.cardShadowColor};
 `;
 
 const Header = styled.header`
@@ -41,7 +41,7 @@ function WholeList() {
   return (
     <Container>
       <Header>
-        <Title>To Do List</Title>
+        <Title>{toDos.length} Tasks</Title>
         <CreateToDo />
       </Header>
       <hr />
