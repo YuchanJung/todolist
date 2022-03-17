@@ -10,11 +10,11 @@ const Container = styled.div`
   height: 500px;
   border-radius: 20px;
   background-color: ${(props) => props.theme.cardBgColor};
-  box-shadow: 5px 5px 5px ${(props) => props.theme.cardShadowColor};
+  box-shadow: 5px 5px 10px ${(props) => props.theme.cardShadowColor};
 `;
 
 const Header = styled.header`
-  height: 20vh;
+  height: 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,18 +22,17 @@ const Header = styled.header`
 `;
 
 const Title = styled.h1`
+  width: 90%;
   font-family: 'Roboto Slab', serif;
-  font-size: 45px;
-  margin: 15px 0px;
+  font-size: 42px;
+  margin: 15px 5px;
 `;
 
 const Body = styled.div`
-  min-height: 20vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.cardBgColor};
 `;
 
 function WholeList() {

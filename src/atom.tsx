@@ -10,6 +10,7 @@ export interface IToDo {
   text: string;
   id: number;
   category: Categories;
+  checked: boolean;
 }
   
 export const toDosState = atom<IToDo[]>({

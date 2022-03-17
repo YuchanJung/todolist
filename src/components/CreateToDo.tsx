@@ -80,7 +80,7 @@ function CreateToDo() {
     const setToDos = useSetRecoilState(toDosState);
     const category = useRecoilValue(categoryState);
     const onValid = ({ toDo }: IForm) => {
-      setToDos((prev) => [{ text: toDo, id: Date.now(), category }, ...prev]);
+      setToDos((prev) => [{ text: toDo, id: Date.now(), category, checked: false }, ...prev]);
       setValue("toDo", "");
     };
     return (
