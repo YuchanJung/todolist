@@ -9,9 +9,9 @@ export const darkTheme: DefaultTheme = {
 };
 
 export const lightTheme: DefaultTheme = {
-    bgColor: "white",
+    bgColor: "#ecf0f1",
     textColor: "black",
     accentColor: "#8c7ae6",
-    cardBgColor: "whitesmoke",
+    cardBgColor: "white",
     cardShadowColor: "#bdc3c7"
 };

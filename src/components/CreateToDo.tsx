@@ -31,7 +31,7 @@ const ToDoInput = styled.input`
   }
 `;
 
-const CreateBtn = styled.button`
+const CreateButton = styled.button`
   width: 30px;
   height: 30px;
   -webkit-border-radius: 15px;
@@ -93,7 +93,7 @@ function CreateToDo() {
             })}
             placeholder={`Write a ${category.toLowerCase()}`}
           />
-          <CreateBtn />
+          <CreateButton />
         </ToDoForm>
         <span>{errors.toDo?.message}</span>
       </InputContainer>

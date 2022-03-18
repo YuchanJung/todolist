@@ -4,20 +4,33 @@ import styled from "styled-components";
 import { Categories, IToDo, toDosState } from "../atom";
 
 const ToDoContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   width: 90%;
+  height: 40px;
   font-size: 24px;
   padding: 5px 2px;
+  margin: 4px;
 `;
 
 const ToDoInput = styled.input`
+  margin-right: 10px;
   :checked + label {
-    color: #aeaeb1;
+    color: ${(props) => props.theme.cardShadowColor};
     text-decoration: line-through;
   }
 `;
 
+const DeleteButton = styled.button`
+  position: absolute;
+  right: 10px;
+  width: 60px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: transparent;
+  border: 2px solid ${(props) => props.theme.cardShadowColor};
+`;
 
 function ToDo({ text, category, id, checked }: IToDo) {
   const [toDos, setToDos] = useRecoilState(toDosState);
@@ -76,9 +89,9 @@ function ToDo({ text, category, id, checked }: IToDo) {
           Done
         </button>
       )}
-      <button name="DELETE" onClick={onClick}>
+      <DeleteButton name="DELETE" onClick={onClick}>
         Delete
-      </button>
+      </DeleteButton>
     </ToDoContainer>
   );
 }

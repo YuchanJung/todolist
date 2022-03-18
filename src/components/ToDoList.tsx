@@ -8,9 +8,9 @@ import ToDo from "./ToDo";
 const Container = styled.div`
   width: 380px;
   height: 500px;
-  border-radius: 20px;
+  border-radius: 35px;
   background-color: ${(props) => props.theme.cardBgColor};
-  box-shadow: -2px 4px 20px 4px ${(props) => props.theme.cardShadowColor};
+  box-shadow: -2px 4px 20px 6px ${(props) => props.theme.cardShadowColor};
 `;
 
 const Header = styled.header`
@@ -25,7 +25,8 @@ const Title = styled.h1`
   width: 90%;
   font-family: 'Roboto Slab', serif;
   font-size: 42px;
-  margin: 15px 5px;
+  margin: 15px 0px;
+  padding: 0px 10px;
 `;
 
 const Body = styled.div`
@@ -44,7 +45,6 @@ function WholeList() {
         <Title>{toDos.length} Tasks</Title>
         <CreateToDo />
       </Header>
-      <hr />
       <SelectCategory />
       <Body>
         {toDos.map((toDo) => (
