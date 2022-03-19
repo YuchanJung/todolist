@@ -37,7 +37,7 @@ const CreateButton = styled.button`
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  border-color: ${(props) => props.theme.textColor};
+  border: 2px solid ${(props) => props.theme.textColor};
   background-color: transparent;
 
   &:after {

@@ -67,6 +67,9 @@ a {
   text-decoration: none;
   color: inherit;
 }
+button {
+  color: ${(props) => props.theme.textColor}
+}
 `;
 
 export default Globalstyle;

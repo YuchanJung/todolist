@@ -17,7 +17,7 @@ const ToDoContainer = styled.div`
 const ToDoInput = styled.input`
   margin-right: 10px;
   :checked + label {
-    color: ${(props) => props.theme.cardShadowColor};
+    color: ${(props) => props.theme.cardShadowColor}; // have to change
     text-decoration: line-through;
   }
 `;
@@ -25,11 +25,11 @@ const ToDoInput = styled.input`
 const DeleteButton = styled.button`
   position: absolute;
   right: 10px;
-  width: 60px;
+  width: 65px;
   height: 30px;
   border-radius: 15px;
   background-color: transparent;
-  border: 2px solid ${(props) => props.theme.cardShadowColor};
+  border: 2px solid ${(props) => props.theme.textColor};
 `;
 
 function ToDo({ text, category, id, checked }: IToDo) {

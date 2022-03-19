@@ -18,7 +18,7 @@ const Input = styled.input`
 
 const Label = styled.label`
   position: relative;
-  background-color: ${(props) => props.theme.cardShadowColor};
+  background-color: ${(props) => props.theme.accentColor};
   transition: 0.2s ease-in;
   display: flex;
   align-items: center;
