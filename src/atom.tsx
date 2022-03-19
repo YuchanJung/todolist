@@ -13,6 +13,11 @@ export interface IToDo {
   checked: boolean;
 }
   
+export const isDarkState = atom({
+  key: "isDark",
+  default: false,
+});
+
 export const toDosState = atom<IToDo[]>({
   key: "toDos",
   default: [],

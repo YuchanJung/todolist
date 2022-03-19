@@ -38,6 +38,7 @@ const CreateButton = styled.button`
   -moz-border-radius: 15px;
   border-radius: 15px;
   border-color: ${(props) => props.theme.textColor};
+  background-color: transparent;
 
   &:after {
     width: 18px;
