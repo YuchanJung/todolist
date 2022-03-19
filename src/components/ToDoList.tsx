@@ -2,6 +2,7 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { toDosSelector } from "../atom";
 import CreateToDo from "./CreateToDo";
+import DarkModeButton from "./DarkModeButton";
 import SelectCategory from "./SelectCategory";
 import ToDo from "./ToDo";
 
@@ -14,15 +15,14 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  height: 30%;
+  height: 20%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 5px 20px;
 `;
 
 const Title = styled.h1`
-  width: 90%;
   font-family: 'Roboto Slab', serif;
   font-size: 42px;
   margin: 15px 0px;
@@ -43,10 +43,11 @@ function WholeList() {
     <Container>
       <Header>
         <Title>{toDos.length} Tasks</Title>
-        <CreateToDo />
+        <DarkModeButton />
       </Header>
       <SelectCategory />
       <Body>
+        <CreateToDo />
         {toDos.map((toDo) => (
           <ToDo key={toDo.id} {...toDo} />
         ))}
