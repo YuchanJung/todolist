@@ -3,23 +3,24 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { categoryState, toDosState } from "../atom";
 
-const InputContainer = styled.div`
+const Container = styled.div`
   width: 90%;
+  margin-left: 5%;
   height: 50px;
   span {
     font-size: 12px;
   }
 `;
 
-const ToDoForm = styled.form`
+const Form = styled.form`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 5px 0px;
 `;
 
-const ToDoInput = styled.input`
-  width: 90%;
+const Input = styled.input`
+  width: 85%;
   height: 30px;
   font-size: 15px;
   background-color: transparent;
@@ -39,6 +40,7 @@ const CreateButton = styled.button`
   border-radius: 15px;
   border: 2px solid ${(props) => props.theme.textColor};
   background-color: transparent;
+  margin-right: 10px;
 
   &:after {
     width: 18px;
@@ -85,9 +87,9 @@ function CreateToDo() {
       setValue("toDo", "");
     };
     return (
-      <InputContainer>
-        <ToDoForm onSubmit={handleSubmit(onValid)}>
-          <ToDoInput
+      <Container>
+        <Form onSubmit={handleSubmit(onValid)}>
+          <Input
             {...register("toDo", {
               required: "Contents are required",
               minLength: { value: 5, message: "Contents are too short" },
@@ -95,9 +97,9 @@ function CreateToDo() {
             placeholder={`Write a ${category.toLowerCase()}`}
           />
           <CreateButton />
-        </ToDoForm>
+        </Form>
         <span>{errors.toDo?.message}</span>
-      </InputContainer>
+      </Container>
     );
 }
 

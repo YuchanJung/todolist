@@ -29,12 +29,15 @@ const Title = styled.h1`
   padding: 0px 10px;
 `;
 
-const Body = styled.div`
+const Body = styled.div``;
+
+const Contents = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
+
 
 function WholeList() {
   const toDos = useRecoilValue(toDosSelector);
@@ -48,9 +51,11 @@ function WholeList() {
       <SelectCategory />
       <Body>
         <CreateToDo />
-        {toDos.map((toDo) => (
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
+        <Contents>
+          {toDos.map((toDo) => (
+            <ToDo key={toDo.id} {...toDo} />
+          ))}
+        </Contents>
       </Body>
     </Container>
   );

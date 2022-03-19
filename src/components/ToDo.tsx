@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { Categories, IToDo, toDosState } from "../atom";
 
-const ToDoContainer = styled.div`
+const Container = styled.div`
   position: relative;
   display: flex;
   align-items: center;
@@ -14,7 +14,7 @@ const ToDoContainer = styled.div`
   margin: 4px;
 `;
 
-const ToDoInput = styled.input`
+const Input = styled.input`
   margin-right: 10px;
   :checked + label {
     color: ${(props) => props.theme.cardShadowColor}; // have to change
@@ -66,8 +66,8 @@ function ToDo({ text, category, id, checked }: IToDo) {
     });
   }
   return (
-    <ToDoContainer>
-      <ToDoInput
+    <Container>
+      <Input
         type="checkbox"
         checked={checked}
         onChange={onChange}
@@ -92,7 +92,7 @@ function ToDo({ text, category, id, checked }: IToDo) {
       <DeleteButton name="DELETE" onClick={onClick}>
         Delete
       </DeleteButton>
-    </ToDoContainer>
+    </Container>
   );
 }
 
