@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { toDosSelector, toDosState, TODOS_KEY } from "../atom";
@@ -42,9 +43,11 @@ const Contents = styled.div`
 function WholeList() {
   const savedToDos = localStorage.getItem(TODOS_KEY);
   const [toDos, setToDos] = useRecoilState(toDosState);
-  if (savedToDos && savedToDos !== JSON.stringify(toDos)) {
-    setToDos(JSON.parse(savedToDos));
-  }
+  useEffect(() => {
+    if (savedToDos && savedToDos !== JSON.stringify(toDos)) {
+      setToDos(JSON.parse(savedToDos));
+    }
+  }, []);
   /* 
   error handling => I think these codes should run only once. (without useEffect hook)
   This issue affects onChange function in ToDo.tsx .
