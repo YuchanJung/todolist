@@ -1,7 +1,13 @@
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { toDosSelector, toDosState, TODOS_KEY } from "../atom";
+import {
+  isDarkState,
+  ISDARK_KEY,
+  toDosSelector,
+  toDosState,
+  TODOS_KEY,
+} from "../atom";
 import CreateToDo from "./CreateToDo";
 import DarkModeButton from "./DarkModeButton";
 import SelectCategory from "./SelectCategory";
@@ -24,7 +30,7 @@ const Header = styled.header`
 `;
 
 const Title = styled.h1`
-  font-family: 'Roboto Slab', serif;
+  font-family: "Roboto Slab", serif;
   font-size: 42px;
   margin: 15px 0px;
   padding: 0px 10px;
@@ -39,20 +45,23 @@ const Contents = styled.div`
   align-items: center;
 `;
 
-
 function WholeList() {
   const savedToDos = localStorage.getItem(TODOS_KEY);
+  const savedIsDark = localStorage.getItem(ISDARK_KEY);
   const [toDos, setToDos] = useRecoilState(toDosState);
+  const [isDark, setIsDark] = useRecoilState(isDarkState);
   useEffect(() => {
     if (savedToDos && savedToDos !== JSON.stringify(toDos)) {
       setToDos(JSON.parse(savedToDos));
     }
+    if (savedIsDark) setIsDark(JSON.parse(savedIsDark));
+    else localStorage.setItem(ISDARK_KEY, JSON.stringify(isDark));
   }, []);
   /* 
   error handling => I think these codes should run only once. (without useEffect hook)
   This issue affects onChange function in ToDo.tsx .
   Can I use useEffect hook? 
-  */ 
+  */
   const toDosByCat = useRecoilValue(toDosSelector);
   return (
     <Container>

@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
-import styled from 'styled-components';
-import { useSetRecoilState } from "recoil";
-import { isDarkState } from '../atom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { isDarkState, ISDARK_KEY } from "../atom";
 
 const DarkModeBtn = styled.div`
   margin-right: 10px;
@@ -11,9 +11,9 @@ const DarkModeBtn = styled.div`
 const Input = styled.input`
   opacity: 0;
   position: absolute;
-  &:checked + label div{
+  &:checked + label div {
     transform: translateX(-24px);
-  } 
+  }
 `;
 
 const Label = styled.label`
@@ -41,26 +41,29 @@ const ToggleBall = styled.div`
   transition: 0.2s linear;
 `;
 
-
-function DarkModeButton () {
-    const setIsDark = useSetRecoilState(isDarkState);
-    const onChange = () => {
-        setIsDark((prev) => !prev);
-    }
-    return (
-      <DarkModeBtn>
-        <Input
-          type="checkbox"
-          onChange={onChange}
-          id="checkbox"
-        />
-        <Label htmlFor="checkbox">
-          <FontAwesomeIcon icon={faMoon} className="fa-moon" />
-          <FontAwesomeIcon icon={faSun} className="fa-sun" />
-          <ToggleBall />
-        </Label>
-      </DarkModeBtn>
-    );
+function DarkModeButton() {
+  const [isDark, setIsDark] = useRecoilState(isDarkState);
+  const onChange = () => {
+    setIsDark((prev) => {
+      localStorage.setItem(ISDARK_KEY, JSON.stringify(!prev));
+      return !prev;
+    });
+  };
+  return (
+    <DarkModeBtn>
+      <Input
+        type="checkbox"
+        checked={isDark}
+        onChange={onChange}
+        id="checkbox"
+      />
+      <Label htmlFor="checkbox">
+        <FontAwesomeIcon icon={faMoon} className="fa-moon" />
+        <FontAwesomeIcon icon={faSun} className="fa-sun" />
+        <ToggleBall />
+      </Label>
+    </DarkModeBtn>
+  );
 }
 
 export default DarkModeButton;

@@ -14,6 +14,7 @@ export interface IToDo {
 }
   
 export const TODOS_KEY = "toDos";
+export const ISDARK_KEY = "isDark";
 
 export const isDarkState = atom({
   key: "isDark",
