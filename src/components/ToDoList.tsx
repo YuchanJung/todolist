@@ -61,6 +61,7 @@ function WholeList() {
   error handling => I think these codes should run only once. (without useEffect hook)
   This issue affects onChange function in ToDo.tsx .
   Can I use useEffect hook? 
+  link : https://github.com/facebookexperimental/Recoil/issues/12
   */
   const toDosByCat = useRecoilValue(toDosSelector);
   return (
