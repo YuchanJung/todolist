@@ -1,7 +1,7 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { Categories, IToDo, toDosState } from "../atom";
+import { Categories, IToDo, toDosState, TODOS_KEY } from "../atom";
 
 const Container = styled.div`
   position: relative;
@@ -33,38 +33,44 @@ const DeleteButton = styled.button`
 `;
 
 function ToDo({ text, category, id, checked }: IToDo) {
-  const [toDos, setToDos] = useRecoilState(toDosState);
+  const setToDos = useSetRecoilState(toDosState);
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
       currentTarget: { name },
     } = event;
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
-      const newToDo = { text, id, category: name as Categories, checked };
-      // console.log(newToDo) -> error handling
-      return name !== "DELETE"
-        ? [
-            ...oldToDos.slice(0, targetIndex),
-            newToDo,
-            ...oldToDos.slice(targetIndex + 1),
-          ]
-        : [
-            ...oldToDos.slice(0, targetIndex),
-            ...oldToDos.slice(targetIndex + 1),
-          ];
+      let newToDos = [];
+      if (name === "DELETE") {
+        newToDos = [
+          ...oldToDos.slice(0, targetIndex),
+          ...oldToDos.slice(targetIndex + 1),
+        ];
+      } else {
+        const newToDo = { text, id, category: name as Categories, checked };
+        newToDos = [
+          ...oldToDos.slice(0, targetIndex),
+          newToDo,
+          ...oldToDos.slice(targetIndex + 1),
+        ];
+      }
+      localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
+      return newToDos;
     });
   };
   const onChange = () => {
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
-      const newToDo = {text, id, category, checked: !checked}
-      return [
+      const newToDo = { text, id, category, checked: !checked };
+      const newToDos = [
         ...oldToDos.slice(0, targetIndex),
         newToDo,
         ...oldToDos.slice(targetIndex + 1),
       ];
+      localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
+      return newToDos;
     });
-  }
+  };
   return (
     <Container>
       <Input

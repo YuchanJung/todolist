@@ -13,6 +13,8 @@ export interface IToDo {
   checked: boolean;
 }
   
+export const TODOS_KEY = "toDos";
+
 export const isDarkState = atom({
   key: "isDark",
   default: false,

@@ -1,6 +1,6 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { toDosSelector } from "../atom";
+import { toDosSelector, toDosState, TODOS_KEY } from "../atom";
 import CreateToDo from "./CreateToDo";
 import DarkModeButton from "./DarkModeButton";
 import SelectCategory from "./SelectCategory";
@@ -32,27 +32,36 @@ const Title = styled.h1`
 const Body = styled.div``;
 
 const Contents = styled.div`
+  height: 240px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 `;
 
 
 function WholeList() {
-  const toDos = useRecoilValue(toDosSelector);
-  console.log(toDos);
+  const savedToDos = localStorage.getItem(TODOS_KEY);
+  const [toDos, setToDos] = useRecoilState(toDosState);
+  if (savedToDos && savedToDos !== JSON.stringify(toDos)) {
+    setToDos(JSON.parse(savedToDos));
+  }
+  /* 
+  error handling => I think these codes should run only once. (without useEffect hook)
+  This issue affects onChange function in ToDo.tsx .
+  Can I use useEffect hook? 
+  */ 
+  const toDosByCat = useRecoilValue(toDosSelector);
   return (
     <Container>
       <Header>
-        <Title>{toDos.length} Tasks</Title>
+        <Title>{toDosByCat.length} Tasks</Title>
         <DarkModeButton />
       </Header>
       <SelectCategory />
       <Body>
         <CreateToDo />
         <Contents>
-          {toDos.map((toDo) => (
+          {toDosByCat.map((toDo) => (
             <ToDo key={toDo.id} {...toDo} />
           ))}
         </Contents>
