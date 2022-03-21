@@ -8,12 +8,10 @@ import { darkTheme, lightTheme } from './theme';
 function App() {
   const isDark = useRecoilValue(isDarkState);
   return (
-    <>
-      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-        <Globalstyle />
-        <ToDoList />
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <Globalstyle />
+      <ToDoList />
+    </ThemeProvider>
   );
 }
 

@@ -32,6 +32,21 @@ const DeleteButton = styled.button`
   border: 2px solid ${(props) => props.theme.textColor};
 `;
 
+function deletedToDos(oldToDos: IToDo[], targetIndex: number) {
+  return [
+    ...oldToDos.slice(0, targetIndex),
+    ...oldToDos.slice(targetIndex + 1),
+  ];
+}
+
+function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
+  return [
+    ...oldToDos.slice(0, targetIndex),
+    newToDo,
+    ...oldToDos.slice(targetIndex + 1),
+  ];
+}
+
 function ToDo({ text, category, id, checked }: IToDo) {
   const setToDos = useSetRecoilState(toDosState);
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,17 +57,10 @@ function ToDo({ text, category, id, checked }: IToDo) {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
       let newToDos = [];
       if (name === "DELETE") {
-        newToDos = [
-          ...oldToDos.slice(0, targetIndex),
-          ...oldToDos.slice(targetIndex + 1),
-        ];
+        newToDos = deletedToDos(oldToDos, targetIndex);
       } else {
         const newToDo = { text, id, category: name as Categories, checked };
-        newToDos = [
-          ...oldToDos.slice(0, targetIndex),
-          newToDo,
-          ...oldToDos.slice(targetIndex + 1),
-        ];
+        newToDos = addedToDos(oldToDos, newToDo, targetIndex);
       }
       localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
       return newToDos;
@@ -62,11 +70,7 @@ function ToDo({ text, category, id, checked }: IToDo) {
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
       const newToDo = { text, id, category, checked: !checked };
-      const newToDos = [
-        ...oldToDos.slice(0, targetIndex),
-        newToDo,
-        ...oldToDos.slice(targetIndex + 1),
-      ];
+      const newToDos = addedToDos(oldToDos, newToDo, targetIndex);
       localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
       return newToDos;
     });
