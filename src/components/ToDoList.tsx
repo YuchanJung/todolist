@@ -43,6 +43,15 @@ const Contents = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: overlay;
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${(props) => props.theme.textColor};
+    border-radius: 10px;
+  }
 `;
 
 function WholeList() {

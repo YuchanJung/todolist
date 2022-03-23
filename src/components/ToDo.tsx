@@ -8,7 +8,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   width: 90%;
-  height: 40px;
+  min-height: 40px;
   font-size: 24px;
   padding: 5px 2px;
   margin: 4px;
