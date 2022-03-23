@@ -11,6 +11,7 @@ import {
 import CreateToDo from "./CreateToDo";
 import DarkModeButton from "./DarkModeButton";
 import SelectCategory from "./SelectCategory";
+import SelectDate from "./SelectDate";
 import ToDo from "./ToDo";
 
 const Container = styled.div`
@@ -82,6 +83,7 @@ function WholeList() {
       <SelectCategory />
       <Body>
         <CreateToDo />
+        <SelectDate />
         <Contents>
           {toDosByCat.map((toDo) => (
             <ToDo key={toDo.id} {...toDo} />
