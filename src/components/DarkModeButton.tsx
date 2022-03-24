@@ -58,8 +58,8 @@ function DarkModeButton() {
         id="checkbox"
       />
       <Label htmlFor="checkbox">
-        <FontAwesomeIcon icon={faMoon} className="fa-moon" />
-        <FontAwesomeIcon icon={faSun} className="fa-sun" />
+        <FontAwesomeIcon icon={faMoon} className="faMoon" />
+        <FontAwesomeIcon icon={faSun} className="faSun" />
         <ToggleBall />
       </Label>
     </DarkModeBtn>

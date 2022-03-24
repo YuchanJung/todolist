@@ -80,10 +80,10 @@ function WholeList() {
         <Title>{toDosByCat.length} Tasks</Title>
         <DarkModeButton />
       </Header>
-      <SelectCategory />
+      {/*<SelectCategory />*/}
       <Body>
-        <CreateToDo />
         <SelectDate />
+        <CreateToDo />
         <Contents>
           {toDosByCat.map((toDo) => (
             <ToDo key={toDo.id} {...toDo} />

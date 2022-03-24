@@ -1,7 +1,12 @@
-.fa-moon {
+.faMoon {
     color: #f1c40f;
 }
 
-.fa-sun {
+.faSun {
     color: #f39c12;
+}
+
+.angleLeft, .angleRight{
+    width: 20px;
+    height: 20px;
 }
