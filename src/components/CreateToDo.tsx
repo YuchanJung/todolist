@@ -7,8 +7,11 @@ const Container = styled.div`
   width: 90%;
   margin-left: 5%;
   height: 50px;
+  position: relative;
   span {
-    font-size: 12px;
+    position: absolute;
+    font-size: 13px;
+    right: 50px;
   }
 `;
 
