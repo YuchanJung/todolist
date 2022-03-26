@@ -12,6 +12,10 @@ const Container = styled.div`
   font-size: 24px;
   padding: 5px 2px;
   margin: 4px;
+  label {
+    display: inline-block;
+    margin-left: 7px;
+  }
 `;
 
 const Input = styled.input`
@@ -24,7 +28,7 @@ const Input = styled.input`
 
 const DeleteButton = styled.button`
   position: absolute;
-  right: 10px;
+  right: 3px;
   width: 65px;
   height: 30px;
   border-radius: 15px;

@@ -11,7 +11,7 @@ const Container = styled.div`
   span {
     position: absolute;
     font-size: 13px;
-    right: 50px;
+    right: 45px;
   }
 `;
 
@@ -29,7 +29,7 @@ const Input = styled.input`
   background-color: transparent;
   border-width: 0 0 2px;
   border-color: ${(props) => props.theme.textColor};
-  margin-right: 7px;
+  margin-left: 7px;
   :focus {
     outline: none;
   }
@@ -43,7 +43,7 @@ const CreateButton = styled.button`
   border-radius: 15px;
   border: 2px solid ${(props) => props.theme.textColor};
   background-color: transparent;
-  margin-right: 10px;
+  margin-right: 3px;
 
   &:after {
     width: 18px;
