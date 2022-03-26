@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { categoryState, toDosState, TODOS_KEY } from "../atom";
+import { categoryState, dateState, toDosState, TODOS_KEY } from "../atom";
 
 const Container = styled.div`
   width: 90%;
@@ -31,7 +31,7 @@ const Input = styled.input`
   border-color: ${(props) => props.theme.textColor};
   margin-right: 7px;
   :focus {
-      outline: none;
+    outline: none;
   }
 `;
 
@@ -71,44 +71,47 @@ const CreateButton = styled.button`
   }
 `;
 
-
 interface IForm {
   toDo: string;
 }
 
 function CreateToDo() {
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-      setValue,
-    } = useForm<IForm>();
-    const setToDos = useSetRecoilState(toDosState);
-    const category = useRecoilValue(categoryState);
-    const onValid = ({ toDo }: IForm) => {
-      setToDos((prev) => {
-        const newToDos = [...prev, { text: toDo, id: Date.now(), category, checked: false }];
-        localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
-        return newToDos;
-      });
-      setValue("toDo", "");
-      // useRecoilState 사용 후 lacalStorage.setItem(TODOS_KEY, toDos); 하면 prev todos가 저장됨. why?
-    };
-    return (
-      <Container>
-        <Form onSubmit={handleSubmit(onValid)}>
-          <Input
-            {...register("toDo", {
-              required: "Contents are required",
-              minLength: { value: 5, message: "Contents are too short" },
-            })}
-            placeholder={`Write a ${category.toLowerCase()}`}
-          />
-          <CreateButton />
-        </Form>
-        <span>{errors.toDo?.message}</span>
-      </Container>
-    );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<IForm>();
+  const setToDos = useSetRecoilState(toDosState);
+  const category = useRecoilValue(categoryState);
+  const date = useRecoilValue(dateState);
+  const onValid = ({ toDo }: IForm) => {
+    setToDos((prev) => {
+      const newToDos = [
+        ...prev,
+        { text: toDo, id: Date.now(), category, checked: false, date },
+      ];
+      localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
+      return newToDos;
+    });
+    setValue("toDo", "");
+    // useRecoilState 사용 후 lacalStorage.setItem(TODOS_KEY, toDos); 하면 prev todos가 저장됨. why?
+  };
+  return (
+    <Container>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <Input
+          {...register("toDo", {
+            required: "Contents are required",
+            minLength: { value: 5, message: "Contents are too short" },
+          })}
+          placeholder={`Write a ${category.toLowerCase()}`}
+        />
+        <CreateButton />
+      </Form>
+      <span>{errors.toDo?.message}</span>
+    </Container>
+  );
 }
 
 export default CreateToDo;

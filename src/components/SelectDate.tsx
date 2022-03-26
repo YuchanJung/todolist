@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { Categories, categoryState } from "../atom";
+import { Categories, dateState, IDate, returnDate } from "../atom";
 
 const Container = styled.div`
   display: flex;
@@ -29,37 +29,59 @@ const RightButton = styled(ChangeDateButton)`
   right: 5px;
 `;
 
-const CategorySpan = styled.span`
+const DateSpan = styled.span`
   font-size: 20px;
 `;
 
+/*
 function changeCat(category: Categories, direction: string) {
   const categories = Object.values(Categories);
+  const date = new Date();
   const currentIndex = categories.findIndex((cat) => cat === category);
+  console.log(date.toLocaleString("en-us", { month: "short" }));
   return direction === "left"
     ? categories[currentIndex - 1]
     : categories[currentIndex + 1];
 }
+*/
+
+function changeDate(date: IDate, direction: string) {
+  const today = new Date(date.year, date.month, date.day);
+  const change = direction === "left" ? -1 : 1;
+  const yesterday = new Date(today.setDate(today.getDate() + change));
+  return returnDate(yesterday);
+}
 
 function SelectDate() {
-  const [category, setCategory] = useRecoilState(categoryState);
+  // const [category, setCategory] = useRecoilState(categoryState);
+  const [date, setDate] = useRecoilState(dateState);
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const onClick = (event: React.FormEvent<HTMLButtonElement>) => {
     const direction = event.currentTarget.value;
-    setCategory(changeCat(category, direction));
+    setDate(changeDate(date, direction));
   };
   return (
     <Container>
-      {category !== Categories.DOING && (
-        <LeftButton value="left" onClick={onClick}>
-          <FontAwesomeIcon icon={faAngleLeft} className="angleLeft" />
-        </LeftButton>
-      )}
-      <CategorySpan>{category}</CategorySpan>
-      {category !== Categories.DONE && (
-        <RightButton value="right" onClick={onClick}>
-          <FontAwesomeIcon icon={faAngleRight} className="angleRight" />
-        </RightButton>
-      )}
+      <LeftButton value="left" onClick={onClick}>
+        <FontAwesomeIcon icon={faAngleLeft} className="angleLeft" />
+      </LeftButton>
+      <DateSpan>{monthNames[date.month]}&nbsp;&nbsp;{date.day}</DateSpan>
+      <RightButton value="right" onClick={onClick}>
+        <FontAwesomeIcon icon={faAngleRight} className="angleRight" />
+      </RightButton>
     </Container>
   );
 }

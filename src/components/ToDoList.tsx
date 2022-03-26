@@ -4,7 +4,8 @@ import styled from "styled-components";
 import {
   isDarkState,
   ISDARK_KEY,
-  toDosSelector,
+  toDosCatSelector,
+  toDosDateSelector,
   toDosState,
   TODOS_KEY,
 } from "../atom";
@@ -73,11 +74,12 @@ function WholeList() {
   Can I use useEffect hook? 
   link : https://github.com/facebookexperimental/Recoil/issues/12
   */
-  const toDosByCat = useRecoilValue(toDosSelector);
+  const toDosByCat = useRecoilValue(toDosCatSelector);
+  const toDosByDate = useRecoilValue(toDosDateSelector);
   return (
     <Container>
       <Header>
-        <Title>{toDosByCat.length} Tasks</Title>
+        <Title>{toDosByDate.length} Tasks</Title>
         <DarkModeButton />
       </Header>
       {/*<SelectCategory />*/}
@@ -85,7 +87,7 @@ function WholeList() {
         <SelectDate />
         <CreateToDo />
         <Contents>
-          {toDosByCat.map((toDo) => (
+          {toDosByDate.map((toDo) => (
             <ToDo key={toDo.id} {...toDo} />
           ))}
         </Contents>

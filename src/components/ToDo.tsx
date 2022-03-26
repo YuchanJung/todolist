@@ -47,7 +47,7 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
   ];
 }
 
-function ToDo({ text, category, id, checked }: IToDo) {
+function ToDo({ text, category, id, checked, date }: IToDo) {
   const setToDos = useSetRecoilState(toDosState);
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
@@ -59,7 +59,7 @@ function ToDo({ text, category, id, checked }: IToDo) {
       if (name === "DELETE") {
         newToDos = deletedToDos(oldToDos, targetIndex);
       } else {
-        const newToDo = { text, id, category: name as Categories, checked };
+        const newToDo = { text, id, category: name as Categories, checked, date };
         newToDos = addedToDos(oldToDos, newToDo, targetIndex);
       }
       localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
@@ -69,7 +69,7 @@ function ToDo({ text, category, id, checked }: IToDo) {
   const onChange = () => {
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
-      const newToDo = { text, id, category, checked: !checked };
+      const newToDo = { text, id, category, checked: !checked, date };
       const newToDos = addedToDos(oldToDos, newToDo, targetIndex);
       localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
       return newToDos;
