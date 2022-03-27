@@ -34,8 +34,7 @@ const Header = styled.header`
 const Title = styled.h1`
   font-family: "Roboto Slab", serif;
   font-size: 42px;
-  margin: 15px 0px;
-  padding: 0px 10px;
+  margin-left : 15px;
 `;
 
 const Body = styled.div``;

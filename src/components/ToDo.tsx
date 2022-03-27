@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 90%;
   min-height: 40px;
   font-size: 24px;
-  padding: 5px 2px;
+  padding: 5px 10px;
   margin: 4px;
   label {
     display: inline-block;
@@ -28,7 +28,7 @@ const Input = styled.input`
 
 const DeleteButton = styled.button`
   position: absolute;
-  right: 3px;
+  right: 10px;
   width: 65px;
   height: 30px;
   border-radius: 15px;
@@ -88,7 +88,7 @@ function ToDo({ text, category, id, checked, date }: IToDo) {
         id={id + ""}
       />
       <label htmlFor={id + ""}>{text}</label>
-      {category !== Categories.TO_DO && (
+      {/* {category !== Categories.TO_DO && (
         <button name={Categories.TO_DO} onClick={onClick}>
           To Do
         </button>
@@ -102,7 +102,7 @@ function ToDo({ text, category, id, checked, date }: IToDo) {
         <button name={Categories.DONE} onClick={onClick}>
           Done
         </button>
-      )}
+      )}*/}
       <DeleteButton name="DELETE" onClick={onClick}>
         Delete
       </DeleteButton>

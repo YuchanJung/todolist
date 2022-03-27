@@ -29,7 +29,7 @@ const Input = styled.input`
   background-color: transparent;
   border-width: 0 0 2px;
   border-color: ${(props) => props.theme.textColor};
-  margin-left: 7px;
+  margin: 0px 8px 0px 12px;
   :focus {
     outline: none;
   }
@@ -43,7 +43,7 @@ const CreateButton = styled.button`
   border-radius: 15px;
   border: 2px solid ${(props) => props.theme.textColor};
   background-color: transparent;
-  margin-right: 3px;
+  margin-right: 8px;
 
   &:after {
     width: 18px;
