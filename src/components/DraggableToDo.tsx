@@ -1,9 +1,10 @@
 import React from "react";
+import { Draggable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { Categories, IToDo, toDosState, TODOS_KEY } from "../atom";
 
-const Container = styled.div`
+const Wrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
@@ -51,7 +52,7 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
   ];
 }
 
-function ToDo({ text, category, id, checked, date }: IToDo) {
+function DraggableToDo({ text, category, id, checked, date }: IToDo, index: number) {
   const setToDos = useSetRecoilState(toDosState);
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
@@ -63,7 +64,13 @@ function ToDo({ text, category, id, checked, date }: IToDo) {
       if (name === "DELETE") {
         newToDos = deletedToDos(oldToDos, targetIndex);
       } else {
-        const newToDo = { text, id, category: name as Categories, checked, date };
+        const newToDo = {
+          text,
+          id,
+          category: name as Categories,
+          checked,
+          date,
+        };
         newToDos = addedToDos(oldToDos, newToDo, targetIndex);
       }
       localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
@@ -79,35 +86,29 @@ function ToDo({ text, category, id, checked, date }: IToDo) {
       return newToDos;
     });
   };
+  console.log(index);
   return (
-    <Container>
-      <Input
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        id={id + ""}
-      />
-      <label htmlFor={id + ""}>{text}</label>
-      {/* {category !== Categories.TO_DO && (
-        <button name={Categories.TO_DO} onClick={onClick}>
-          To Do
-        </button>
+    <Draggable draggableId={id.toString()} index={index}>
+      {(provided) => (
+        <Wrapper
+          ref={provided.innerRef}
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+        >
+          <Input
+            type="checkbox"
+            checked={checked}
+            onChange={onChange}
+            id={id + ""}
+          />
+          <label htmlFor={id + ""}>{text}</label>
+          <DeleteButton name="DELETE" onClick={onClick}>
+            Delete
+          </DeleteButton>
+        </Wrapper>
       )}
-      {category !== Categories.DOING && (
-        <button name={Categories.DOING} onClick={onClick}>
-          Doing
-        </button>
-      )}
-      {category !== Categories.DONE && (
-        <button name={Categories.DONE} onClick={onClick}>
-          Done
-        </button>
-      )}*/}
-      <DeleteButton name="DELETE" onClick={onClick}>
-        Delete
-      </DeleteButton>
-    </Container>
+    </Draggable>
   );
 }
 
-export default ToDo;
+export default DraggableToDo;

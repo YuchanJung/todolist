@@ -1,43 +1,8 @@
-import { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import {
-  isDarkState,
-  ISDARK_KEY,
-  toDosCatSelector,
-  toDosDateSelector,
-  toDosState,
-  TODOS_KEY,
-} from "../atom";
-import CreateToDo from "./CreateToDo";
-import DarkModeButton from "./DarkModeButton";
-import SelectCategory from "./SelectCategory";
-import SelectDate from "./SelectDate";
-import ToDo from "./ToDo";
-
-const Container = styled.div`
-  width: 380px;
-  height: 500px;
-  border-radius: 35px;
-  background-color: ${(props) => props.theme.cardBgColor};
-  box-shadow: -2px 4px 20px 6px ${(props) => props.theme.cardShadowColor};
-`;
-
-const Header = styled.header`
-  height: 20%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 20px;
-`;
-
-const Title = styled.h1`
-  font-family: "Roboto Slab", serif;
-  font-size: 42px;
-  margin-left : 15px;
-`;
-
-const Body = styled.div``;
+import { toDosDateSelector } from "../atom";
+import DraggableToDo from "./DraggableToDo";
 
 const Contents = styled.div`
   height: 240px;
@@ -55,44 +20,22 @@ const Contents = styled.div`
   }
 `;
 
-function WholeList() {
-  const savedToDos = localStorage.getItem(TODOS_KEY);
-  const savedIsDark = localStorage.getItem(ISDARK_KEY);
-  const [toDos, setToDos] = useRecoilState(toDosState);
-  const [isDark, setIsDark] = useRecoilState(isDarkState);
-  useEffect(() => {
-    if (savedToDos && savedToDos !== JSON.stringify(toDos)) {
-      setToDos(JSON.parse(savedToDos));
-    }
-    if (savedIsDark) setIsDark(JSON.parse(savedIsDark));
-    else localStorage.setItem(ISDARK_KEY, JSON.stringify(isDark));
-  }, []);
-  /* 
-  error handling => I think these codes should run only once. (without useEffect hook)
-  This issue affects onChange function in ToDo.tsx .
-  Can I use useEffect hook? 
-  link : https://github.com/facebookexperimental/Recoil/issues/12
-  */
-  const toDosByCat = useRecoilValue(toDosCatSelector);
+function ToDoList() {
   const toDosByDate = useRecoilValue(toDosDateSelector);
+  const onDragEnd = () => {};
   return (
-    <Container>
-      <Header>
-        <Title>{toDosByDate.length} Tasks</Title>
-        <DarkModeButton />
-      </Header>
-      {/*<SelectCategory />*/}
-      <Body>
-        <SelectDate />
-        <CreateToDo />
-        <Contents>
-          {toDosByDate.map((toDo) => (
-            <ToDo key={toDo.id} {...toDo} />
-          ))}
-        </Contents>
-      </Body>
-    </Container>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="ToDoList">
+        {(provided) => (
+          <Contents ref={provided.innerRef} {...provided.droppableProps}>
+            {toDosByDate.map((toDo, index) => (
+              <DraggableToDo key={toDo.id} {...toDo} />
+            ))}
+          </Contents>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 }
 
-export default WholeList;
+export default ToDoList;
