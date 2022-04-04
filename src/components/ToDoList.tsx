@@ -1,6 +1,5 @@
 import {
   DragDropContext,
-  Draggable,
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
@@ -43,7 +42,6 @@ function changeToDosIndex(newToDos: IToDo[], oldToDos: IToDo[]) {
           category: toDo.category,
           checked: toDo.checked,
           date: toDo.date,
-          index,
         };
         console.log(index);
       }
@@ -60,12 +58,7 @@ function ToDoList() {
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
     if (!destination) return;
     setToDos((oldToDos) => {
-      const toDosCopy = [...oldToDos];
-      const ToDosByDateCopy = [...toDosByDate];
-      const ToDo = returnTargetToDo(toDosByDate, draggableId);
-      ToDosByDateCopy.splice(source.index, 1);
-      ToDosByDateCopy.splice(destination.index, 0, ToDo);
-      return changeToDosIndex(ToDosByDateCopy, toDosCopy);
+      return oldToDos;
     });
   };
   return (
@@ -73,8 +66,8 @@ function ToDoList() {
       <Droppable droppableId="ToDoList">
         {(provided) => (
           <Contents ref={provided.innerRef} {...provided.droppableProps}>
-            {toDosByDate.map((toDo) => (
-              <DraggableToDo key={toDo.id} {...toDo} />
+            {toDosByDate.map((toDo, index) => (
+              <DraggableToDo key={toDo.id} toDo={toDo} index={index} />
             ))}
           </Contents>
         )}

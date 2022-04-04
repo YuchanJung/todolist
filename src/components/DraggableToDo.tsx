@@ -37,24 +37,19 @@ const DeleteButton = styled.button`
   border: 2px solid ${(props) => props.theme.textColor};
 `;
 
-
-function deletedToDos(oldToDos: IToDo[], targetIndex: number) {
-  const ToDosFilter = oldToDos.filter((toDo, index) => index !== targetIndex);
-  const ToDosIndexing = ToDosFilter.map((toDo, index) => {
-    const newToDo: IToDo = {
-      text: toDo.text,
-      id: toDo.id,
-      category: toDo.category,
-      checked: toDo.checked,
-      date: toDo.date,
-      index,
-    };
-    return newToDo;
-  })
-  console.log(ToDosIndexing);
-  return ToDosIndexing;
+interface IDraggableToDoProps {
+  toDo: IToDo;
+  index: number;
 }
 
+function deletedToDos(oldToDos: IToDo[], targetIndex: number) {
+  return [
+    ...oldToDos.slice(0, targetIndex),
+    ...oldToDos.slice(targetIndex + 1),
+  ];
+}
+
+// for changing checked or categories
 function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
   return [
     ...oldToDos.slice(0, targetIndex),
@@ -63,28 +58,18 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
   ];
 }
 
-function DraggableToDo({ text, id, category, checked, date, index}: IToDo) {
+function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
+  const { text, id, category, checked, date } = toDo;
   const setToDos = useSetRecoilState(toDosState);
-  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    /* 
     const {
       currentTarget: { name },
     } = event;
+    */
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((td) => td.id === id);
-      let newToDos = [];
-      if (name === "DELETE") {
-        newToDos = deletedToDos(oldToDos, targetIndex);
-      } else {
-        const newToDo = {
-          text,
-          id,
-          category: name as Categories,
-          checked,
-          date,
-          index
-        };
-        newToDos = addedToDos(oldToDos, newToDo, targetIndex);
-      }
+      const newToDos = deletedToDos(oldToDos, targetIndex);
       localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
       return newToDos;
     });
@@ -92,7 +77,7 @@ function DraggableToDo({ text, id, category, checked, date, index}: IToDo) {
   const onChange = () => {
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((td) => td.id === id);
-      const newToDo = { text, id, category, checked: !checked, date, index };
+      const newToDo = { text, id, category, checked: !checked, date };
       const newToDos = addedToDos(oldToDos, newToDo, targetIndex);
       localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
       return newToDos;
@@ -113,7 +98,7 @@ function DraggableToDo({ text, id, category, checked, date, index}: IToDo) {
             id={id.toString()}
           />
           <label htmlFor={id.toString()}>{text}</label>
-          <DeleteButton name="DELETE" onClick={onClick}>
+          <DeleteButton name="DELETE" onClick={onDelete}>
             Delete
           </DeleteButton>
         </Wrapper>

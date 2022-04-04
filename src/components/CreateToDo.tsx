@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { categoryState, dateState, toDosDateSelector, toDosState, TODOS_KEY } from "../atom";
+import { categoryState, dateState, toDosState, TODOS_KEY } from "../atom";
 
 const Container = styled.div`
   width: 90%;
@@ -85,12 +85,11 @@ function CreateToDo() {
   const setToDos = useSetRecoilState(toDosState);
   const category = useRecoilValue(categoryState);
   const date = useRecoilValue(dateState);
-  const toDosByDate = useRecoilValue(toDosDateSelector);
   const onValid = ({ toDo }: IForm) => {
     setToDos((prev) => {
       const newToDos = [
         ...prev,
-        { text: toDo, id: Date.now(), category, checked: false, date, index: toDosByDate.length },
+        { text: toDo, id: Date.now(), category, checked: false, date },
       ];
       localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
       return newToDos;

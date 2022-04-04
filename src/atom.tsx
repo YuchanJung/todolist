@@ -18,7 +18,6 @@ export interface IToDo {
   category: Categories;
   checked: boolean;
   date: IDate;
-  index: number;
 }
   
 export const TODOS_KEY = "toDos";
