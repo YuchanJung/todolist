@@ -18,6 +18,7 @@ export interface IToDo {
   category: Categories;
   checked: boolean;
   date: IDate;
+  index: number;
 }
   
 export const TODOS_KEY = "toDos";
@@ -61,9 +62,9 @@ export const toDosCatSelector = selector({
   },
 });
 
-export const toDosDateSelector = selector({
+export const toDosDateSelector = selector<IToDo[]>({
   key: "toDosDateSelector",
-  get: ({get}) => {
+  get: ({ get }) => {
     const toDos = get(toDosState);
     const date = get(dateState);
     return toDos.filter(
@@ -72,5 +73,5 @@ export const toDosDateSelector = selector({
         toDo.date.month === date.month &&
         toDo.date.year === date.year
     );
-  }
-})
+  },
+});
