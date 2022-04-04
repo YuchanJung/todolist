@@ -37,11 +37,22 @@ const DeleteButton = styled.button`
   border: 2px solid ${(props) => props.theme.textColor};
 `;
 
+
 function deletedToDos(oldToDos: IToDo[], targetIndex: number) {
-  return [
-    ...oldToDos.slice(0, targetIndex),
-    ...oldToDos.slice(targetIndex + 1),
-  ];
+  const ToDosFilter = oldToDos.filter((toDo, index) => index !== targetIndex);
+  const ToDosIndexing = ToDosFilter.map((toDo, index) => {
+    const newToDo: IToDo = {
+      text: toDo.text,
+      id: toDo.id,
+      category: toDo.category,
+      checked: toDo.checked,
+      date: toDo.date,
+      index,
+    };
+    return newToDo;
+  })
+  console.log(ToDosIndexing);
+  return ToDosIndexing;
 }
 
 function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
@@ -52,14 +63,14 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
   ];
 }
 
-function DraggableToDo({ text, category, id, checked, date }: IToDo, index: number) {
+function DraggableToDo({ text, id, category, checked, date, index}: IToDo) {
   const setToDos = useSetRecoilState(toDosState);
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
       currentTarget: { name },
     } = event;
     setToDos((oldToDos) => {
-      const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
+      const targetIndex = oldToDos.findIndex((td) => td.id === id);
       let newToDos = [];
       if (name === "DELETE") {
         newToDos = deletedToDos(oldToDos, targetIndex);
@@ -70,6 +81,7 @@ function DraggableToDo({ text, category, id, checked, date }: IToDo, index: numb
           category: name as Categories,
           checked,
           date,
+          index
         };
         newToDos = addedToDos(oldToDos, newToDo, targetIndex);
       }
@@ -79,14 +91,13 @@ function DraggableToDo({ text, category, id, checked, date }: IToDo, index: numb
   };
   const onChange = () => {
     setToDos((oldToDos) => {
-      const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
-      const newToDo = { text, id, category, checked: !checked, date };
+      const targetIndex = oldToDos.findIndex((td) => td.id === id);
+      const newToDo = { text, id, category, checked: !checked, date, index };
       const newToDos = addedToDos(oldToDos, newToDo, targetIndex);
       localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
       return newToDos;
     });
   };
-  console.log(index);
   return (
     <Draggable draggableId={id.toString()} index={index}>
       {(provided) => (
@@ -99,9 +110,9 @@ function DraggableToDo({ text, category, id, checked, date }: IToDo, index: numb
             type="checkbox"
             checked={checked}
             onChange={onChange}
-            id={id + ""}
+            id={id.toString()}
           />
-          <label htmlFor={id + ""}>{text}</label>
+          <label htmlFor={id.toString()}>{text}</label>
           <DeleteButton name="DELETE" onClick={onClick}>
             Delete
           </DeleteButton>
