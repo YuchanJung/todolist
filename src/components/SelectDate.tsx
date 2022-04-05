@@ -1,9 +1,9 @@
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight, faPersonWalkingDashedLineArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { Categories, dateState, IDate, returnDate } from "../atom";
+import { Categories, dateState, IDate, IToDos, returnDate, returnDateKey, toDosState, TODOS_KEY } from "../atom";
 
 const Container = styled.div`
   display: flex;
@@ -55,6 +55,7 @@ function changeDate(date: IDate, direction: string) {
 function SelectDate() {
   // const [category, setCategory] = useRecoilState(categoryState);
   const [date, setDate] = useRecoilState(dateState);
+  const [totalToDos, setTotalToDos] = useRecoilState(toDosState);
   const monthNames = [
     "Jan",
     "Feb",
@@ -71,7 +72,16 @@ function SelectDate() {
   ];
   const onClick = (event: React.FormEvent<HTMLButtonElement>) => {
     const direction = event.currentTarget.value;
-    setDate(changeDate(date, direction));
+    const dateChanged = changeDate(date, direction);
+    const dateKey = returnDateKey(dateChanged);
+    if (!totalToDos[dateKey]) {
+      setTotalToDos(prev => {
+        const totalToDos: IToDos = { ...prev, [dateKey]: { toDos: [] } };
+        localStorage.setItem(TODOS_KEY, JSON.stringify(totalToDos));
+        return totalToDos;
+      })
+    }
+    setDate(dateChanged);
   };
   return (
     <Container>

@@ -64,7 +64,7 @@ function Home() {
   console.log(test);
   useEffect(() => {
     setTest((prev) => {
-      let newTest = { ...prev, [3]: { todo: [] } };
+      let newTest = { ...prev, [3]: { toDos: [] } };
       return newTest;
     });
   }, []);
