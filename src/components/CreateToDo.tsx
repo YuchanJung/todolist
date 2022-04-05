@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { categoryState, dateState, toDosState, TODOS_KEY } from "../atom";
+import { categoryState, dateState, IToDos, returnDateKey, toDosState, TODOS_KEY } from "../atom";
 
 const Container = styled.div`
   width: 90%;
@@ -85,14 +85,17 @@ function CreateToDo() {
   const setToDos = useSetRecoilState(toDosState);
   const category = useRecoilValue(categoryState);
   const date = useRecoilValue(dateState);
+  const dateKey = returnDateKey(date);
   const onValid = ({ toDo }: IForm) => {
     setToDos((prev) => {
+      const oldToDos = prev[dateKey].toDos;
       const newToDos = [
-        ...prev,
+        ...oldToDos,
         { text: toDo, id: Date.now(), category, checked: false, date },
       ];
-      localStorage.setItem(TODOS_KEY, JSON.stringify(newToDos));
-      return newToDos;
+      const totalTodos: IToDos = { ...prev, [dateKey]: { toDos: newToDos } };
+      localStorage.setItem(TODOS_KEY, JSON.stringify(totalTodos));
+      return totalTodos;
     });
     setValue("toDo", "");
     // useRecoilState 사용 후 lacalStorage.setItem(TODOS_KEY, toDos); 하면 prev todos가 저장됨. why?

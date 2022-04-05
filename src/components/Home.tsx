@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import {
+  dateState,
   isDarkState,
   ISDARK_KEY,
-  toDosCatSelector,
-  toDosDateSelector,
+  returnDateKey,
   toDosState,
   TODOS_KEY,
 } from "../atom";
@@ -39,31 +39,16 @@ const Title = styled.h1`
 
 const Body = styled.div``;
 
-const Contents = styled.div`
-  height: 240px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: overlay;
-  &::-webkit-scrollbar {
-    width: 5px;
-    background-color: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: ${(props) => props.theme.textColor};
-    border-radius: 10px;
-  }
-`;
-
 function Home() {
   const savedToDos = localStorage.getItem(TODOS_KEY);
   const savedIsDark = localStorage.getItem(ISDARK_KEY);
-  const [toDos, setToDos] = useRecoilState(toDosState);
+  const [totalToDos, setTotalToDos] = useRecoilState(toDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
+  const dateKey = returnDateKey(useRecoilValue(dateState));
   useEffect(() => {
-    if (savedToDos && savedToDos !== JSON.stringify(toDos)) {
-      setToDos(JSON.parse(savedToDos));
-    }
+    if (savedToDos && savedToDos !== JSON.stringify(totalToDos)) {
+      setTotalToDos(JSON.parse(savedToDos));
+    } // have to change the logic..
     if (savedIsDark) setIsDark(JSON.parse(savedIsDark));
     else localStorage.setItem(ISDARK_KEY, JSON.stringify(isDark));
   }, []);
@@ -73,12 +58,21 @@ function Home() {
   Can I use useEffect hook? 
   link : https://github.com/facebookexperimental/Recoil/issues/12
   */
-  const toDosByCat = useRecoilValue(toDosCatSelector);
-  const toDosByDate = useRecoilValue(toDosDateSelector);
+  // const toDosByCat = useRecoilValue(toDosCatSelector);
+  /*
+  const [test, setTest] = useRecoilState(toDosTestState);
+  console.log(test);
+  useEffect(() => {
+    setTest((prev) => {
+      let newTest = { ...prev, [3]: { todo: [] } };
+      return newTest;
+    });
+  }, []);
+  */
   return (
     <Container>
       <Header>
-        <Title>{toDosByDate.length} Tasks</Title>
+        <Title>{totalToDos[dateKey].toDos.length} Tasks</Title>
         <DarkModeButton />
       </Header>
       {/*<SelectCategory />*/}

@@ -19,6 +19,25 @@ export interface IToDo {
   checked: boolean;
   date: IDate;
 }
+
+export function returnDateKey ({month, day, year} : IDate) {
+  const key = month.toString() + day.toString() + year.toString();
+  return Number(key);
+}
+
+export function returnDate(date: Date) {
+  return {
+    month: date.getMonth(), //date.toLocaleString("en-us", { month: "short" }),
+    day: date.getDate(),
+    year: date.getFullYear(),
+  };
+}
+
+export interface IToDos {
+  [date: number] : {
+    toDos: IToDo[];
+  }
+}
   
 export const TODOS_KEY = "toDos";
 export const ISDARK_KEY = "isDark";
@@ -28,19 +47,10 @@ export const isDarkState = atom({
   default: false,
 });
 
-export const toDosState = atom<IToDo[]>({
-  key: "toDos",
-  default: [],
+export const toDosState = atom<IToDos>({
+  key: "toDosTest",
+  default: { [returnDateKey({ ...returnDate(new Date()) })]: { toDos: [] } },
 });
-
-export function returnDate(date: Date) {
-  const returnDate: IDate = {
-    month: date.getMonth(),//date.toLocaleString("en-us", { month: "short" }),
-    day: date.getDate(),
-    year: date.getFullYear(),
-  };
-  return returnDate;
-}
 
 export const dateState = atom<IDate>({
   key: "date",
@@ -52,6 +62,7 @@ export const categoryState = atom<Categories>({
   default: Categories.TO_DO,
 });
 
+/*
 export const toDosCatSelector = selector({
   key: "toDosCatSelector",
   get: ({ get }) => {
@@ -60,6 +71,7 @@ export const toDosCatSelector = selector({
     return toDos.filter((toDo) => toDo.category === category);
   },
 });
+
 
 export const toDosDateSelector = selector<IToDo[]>({
   key: "toDosDateSelector",
@@ -74,3 +86,4 @@ export const toDosDateSelector = selector<IToDo[]>({
     );
   },
 });
+*/

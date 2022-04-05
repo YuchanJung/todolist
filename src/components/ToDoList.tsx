@@ -5,7 +5,7 @@ import {
 } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { IToDo, toDosDateSelector, toDosState } from "../atom";
+import { dateState, IToDo, returnDateKey, toDosState } from "../atom";
 import DraggableToDo from "./DraggableToDo";
 
 const Contents = styled.div`
@@ -53,8 +53,9 @@ function changeToDosIndex(newToDos: IToDo[], oldToDos: IToDo[]) {
 }
 
 function ToDoList() {
-  const toDosByDate = useRecoilValue(toDosDateSelector);
   const [toDos, setToDos] = useRecoilState(toDosState);
+  const date = useRecoilValue(dateState);
+  const toDosByDate = toDos[returnDateKey(date)].toDos;
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
     if (!destination) return;
     setToDos((oldToDos) => {
