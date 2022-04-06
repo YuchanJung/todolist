@@ -67,6 +67,7 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
 
 function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
   const { text, id, category, checked, date } = toDo;
+  console.log(text);
   const setTotalToDos = useSetRecoilState(totalToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
   const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -125,4 +126,4 @@ function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
   );
 }
 
-export default DraggableToDo;
+export default React.memo(DraggableToDo);
