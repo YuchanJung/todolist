@@ -1,7 +1,13 @@
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { dateState, IToDo, returnDateKey, totalToDosState } from "../atom";
+import {
+  dateState,
+  IToDo,
+  returnDateKey,
+  TODOS_KEY,
+  totalToDosState,
+} from "../atom";
 import DraggableToDo from "./DraggableToDo";
 
 const Contents = styled.div`
@@ -54,9 +60,19 @@ function ToDoList() {
   const dateKey = returnDateKey(date);
   const toDosByDate = totalToDos[dateKey].toDos;
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
-    if (!destination) return;
+    if (!destination) {
+      console.log("hello");
+      return;
+    }
     setTotalToDos((prevTotal) => {
-      return prevTotal;
+      const toDosCopy = [...prevTotal[dateKey].toDos];
+      const targetToDo = returnTargetToDo(toDosCopy, draggableId);
+      toDosCopy.splice(source.index, 1);
+      toDosCopy.splice(destination.index, 0, targetToDo); 
+      // returnTargetToDo를 바로 넣을 시 error. (Uncaught TypeError: Cannot read properties of undefined (reading 'id')) why?
+      const curTotal = { ...prevTotal, [dateKey]: { toDos: toDosCopy } };
+      localStorage.setItem(TODOS_KEY, JSON.stringify(curTotal));
+      return curTotal;
     });
   };
   return (
