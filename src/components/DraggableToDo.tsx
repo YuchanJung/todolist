@@ -2,7 +2,14 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { Categories, dateState, IToDo, IToDos, returnDateKey, toDosState, TODOS_KEY } from "../atom";
+import {
+  dateState,
+  IToDo,
+  ITotalToDos,
+  returnDateKey,
+  TODOS_KEY,
+  totalToDosState,
+} from "../atom";
 
 const Wrapper = styled.div`
   position: relative;
@@ -60,7 +67,7 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
 
 function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
   const { text, id, category, checked, date } = toDo;
-  const setToDos = useSetRecoilState(toDosState);
+  const setTotalToDos = useSetRecoilState(totalToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
   const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
     /* 
@@ -68,24 +75,30 @@ function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
       currentTarget: { name },
     } = event;
     */
-    setToDos((prev) => {
-      const oldToDos = prev[dateKey].toDos;
+    setTotalToDos((prevTotal) => {
+      const oldToDos = prevTotal[dateKey].toDos;
       const targetIndex = oldToDos.findIndex((td) => td.id === id);
       const newToDos = deletedToDos(oldToDos, targetIndex);
-      const totalToDos: IToDos = { ...prev, [dateKey]: { toDos: newToDos } }; 
-      localStorage.setItem(TODOS_KEY, JSON.stringify(totalToDos));
-      return totalToDos;
+      const curTotal: ITotalToDos = {
+        ...prevTotal,
+        [dateKey]: { toDos: newToDos },
+      };
+      localStorage.setItem(TODOS_KEY, JSON.stringify(curTotal));
+      return curTotal;
     });
   };
   const onChange = () => {
-    setToDos((prev) => {
-      const oldToDos = prev[dateKey].toDos;
+    setTotalToDos((prevTotal) => {
+      const oldToDos = prevTotal[dateKey].toDos;
       const targetIndex = oldToDos.findIndex((td) => td.id === id);
       const newToDo = { text, id, category, checked: !checked, date };
       const newToDos = addedToDos(oldToDos, newToDo, targetIndex);
-      const totalToDos: IToDos = { ...prev, [dateKey]: { toDos: newToDos } };
-      localStorage.setItem(TODOS_KEY, JSON.stringify(totalToDos));
-      return totalToDos;
+      const curTotal: ITotalToDos = {
+        ...prevTotal,
+        [dateKey]: { toDos: newToDos },
+      };
+      localStorage.setItem(TODOS_KEY, JSON.stringify(curTotal));
+      return curTotal;
     });
   };
   return (

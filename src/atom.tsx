@@ -1,4 +1,7 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
+
+export const TODOS_KEY = "toDos";
+export const ISDARK_KEY = "isDark";
 
 export enum Categories {
   DOING = "DOING",
@@ -20,7 +23,13 @@ export interface IToDo {
   date: IDate;
 }
 
-export function returnDateKey ({month, day, year} : IDate) {
+export interface ITotalToDos {
+  [date: number]: {
+    toDos: IToDo[];
+  };
+}
+
+export function returnDateKey({ month, day, year }: IDate) {
   const key = month.toString() + day.toString() + year.toString();
   return Number(key);
 }
@@ -33,29 +42,20 @@ export function returnDate(date: Date) {
   };
 }
 
-export interface IToDos {
-  [date: number] : {
-    toDos: IToDo[];
-  }
-}
-  
-export const TODOS_KEY = "toDos";
-export const ISDARK_KEY = "isDark";
-
 export const isDarkState = atom({
   key: "isDark",
   default: false,
 });
 
-export const toDosState = atom<IToDos>({
-  key: "toDosTest",
+export const totalToDosState = atom<ITotalToDos>({
+  key: "totalToDos",
   default: { [returnDateKey({ ...returnDate(new Date()) })]: { toDos: [] } },
 });
 
 export const dateState = atom<IDate>({
   key: "date",
   default: returnDate(new Date()),
-})
+});
 
 export const categoryState = atom<Categories>({
   key: "category",

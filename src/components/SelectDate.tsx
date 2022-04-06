@@ -1,9 +1,17 @@
-import { faAngleLeft, faAngleRight, faPersonWalkingDashedLineArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { Categories, dateState, IDate, IToDos, returnDate, returnDateKey, toDosState, TODOS_KEY } from "../atom";
+import {
+  dateState,
+  IDate,
+  ITotalToDos,
+  returnDate,
+  returnDateKey,
+  TODOS_KEY,
+  totalToDosState,
+} from "../atom";
 
 const Container = styled.div`
   display: flex;
@@ -55,7 +63,7 @@ function changeDate(date: IDate, direction: string) {
 function SelectDate() {
   // const [category, setCategory] = useRecoilState(categoryState);
   const [date, setDate] = useRecoilState(dateState);
-  const [totalToDos, setTotalToDos] = useRecoilState(toDosState);
+  const [totalToDos, setTotalToDos] = useRecoilState(totalToDosState);
   const monthNames = [
     "Jan",
     "Feb",
@@ -75,11 +83,11 @@ function SelectDate() {
     const dateChanged = changeDate(date, direction);
     const dateKey = returnDateKey(dateChanged);
     if (!totalToDos[dateKey]) {
-      setTotalToDos(prev => {
-        const totalToDos: IToDos = { ...prev, [dateKey]: { toDos: [] } };
+      setTotalToDos((prev) => {
+        const totalToDos: ITotalToDos = { ...prev, [dateKey]: { toDos: [] } };
         localStorage.setItem(TODOS_KEY, JSON.stringify(totalToDos));
         return totalToDos;
-      })
+      });
     }
     setDate(dateChanged);
   };
@@ -88,7 +96,9 @@ function SelectDate() {
       <LeftButton value="left" onClick={onClick}>
         <FontAwesomeIcon icon={faAngleLeft} className="angleLeft" />
       </LeftButton>
-      <DateSpan>{monthNames[date.month]}&nbsp;&nbsp;{date.day}</DateSpan>
+      <DateSpan>
+        {monthNames[date.month]}&nbsp;&nbsp;{date.day}
+      </DateSpan>
       <RightButton value="right" onClick={onClick}>
         <FontAwesomeIcon icon={faAngleRight} className="angleRight" />
       </RightButton>

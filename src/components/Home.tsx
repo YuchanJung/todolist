@@ -6,12 +6,11 @@ import {
   isDarkState,
   ISDARK_KEY,
   returnDateKey,
-  toDosState,
   TODOS_KEY,
+  totalToDosState,
 } from "../atom";
 import CreateToDo from "./CreateToDo";
 import DarkModeButton from "./DarkModeButton";
-import SelectCategory from "./SelectCategory";
 import SelectDate from "./SelectDate";
 import ToDoList from "./ToDoList";
 
@@ -42,7 +41,7 @@ const Body = styled.div``;
 function Home() {
   const savedToDos = localStorage.getItem(TODOS_KEY);
   const savedIsDark = localStorage.getItem(ISDARK_KEY);
-  const [totalToDos, setTotalToDos] = useRecoilState(toDosState);
+  const [totalToDos, setTotalToDos] = useRecoilState(totalToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
   useEffect(() => {
@@ -59,16 +58,6 @@ function Home() {
   link : https://github.com/facebookexperimental/Recoil/issues/12
   */
   // const toDosByCat = useRecoilValue(toDosCatSelector);
-  /*
-  const [test, setTest] = useRecoilState(toDosTestState);
-  console.log(test);
-  useEffect(() => {
-    setTest((prev) => {
-      let newTest = { ...prev, [3]: { toDos: [] } };
-      return newTest;
-    });
-  }, []);
-  */
   return (
     <Container>
       <Header>
@@ -80,13 +69,6 @@ function Home() {
         <SelectDate />
         <CreateToDo />
         <ToDoList />
-        {/*
-        <Contents>
-          {toDosByDate.map((toDo) => (
-            <ToDo key={toDo.id} {...toDo} />
-          ))}
-        </Contents> 
-         */}
       </Body>
     </Container>
   );
