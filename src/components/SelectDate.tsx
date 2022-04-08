@@ -63,7 +63,6 @@ function changeDate(date: IDate, direction: string) {
 function SelectDate() {
   // const [category, setCategory] = useRecoilState(categoryState);
   const [date, setDate] = useRecoilState(dateState);
-  const [totalToDos, setTotalToDos] = useRecoilState(totalToDosState);
   const monthNames = [
     "Jan",
     "Feb",
@@ -81,14 +80,6 @@ function SelectDate() {
   const onClick = (event: React.FormEvent<HTMLButtonElement>) => {
     const direction = event.currentTarget.value;
     const dateChanged = changeDate(date, direction);
-    const dateKey = returnDateKey(dateChanged);
-    if (!totalToDos[dateKey]) {
-      setTotalToDos((prev) => {
-        const totalToDos: ITotalToDos = { ...prev, [dateKey]: { toDos: [] } };
-        localStorage.setItem(TODOS_KEY, JSON.stringify(totalToDos));
-        return totalToDos;
-      });
-    }
     setDate(dateChanged);
   };
   return (

@@ -60,15 +60,12 @@ function ToDoList() {
   const dateKey = returnDateKey(date);
   const toDosByDate = totalToDos[dateKey].toDos;
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
-    if (!destination) {
-      console.log("hello");
-      return;
-    }
+    if (!destination) return;
     setTotalToDos((prevTotal) => {
       const toDosCopy = [...prevTotal[dateKey].toDos];
       const targetToDo = returnTargetToDo(toDosCopy, draggableId);
       toDosCopy.splice(source.index, 1);
-      toDosCopy.splice(destination.index, 0, targetToDo); 
+      toDosCopy.splice(destination.index, 0, targetToDo);
       // returnTargetToDo를 바로 넣을 시 error. (Uncaught TypeError: Cannot read properties of undefined (reading 'id')) why?
       const curTotal = { ...prevTotal, [dateKey]: { toDos: toDosCopy } };
       localStorage.setItem(TODOS_KEY, JSON.stringify(curTotal));

@@ -5,6 +5,7 @@ import {
   dateState,
   isDarkState,
   ISDARK_KEY,
+  ITotalToDos,
   returnDateKey,
   TODOS_KEY,
   totalToDosState,
@@ -43,7 +44,15 @@ function Home() {
   const savedIsDark = localStorage.getItem(ISDARK_KEY);
   const [totalToDos, setTotalToDos] = useRecoilState(totalToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
-  const dateKey = returnDateKey(useRecoilValue(dateState));
+  const date = useRecoilValue(dateState);
+  const dateKey = returnDateKey(date);
+  if (!totalToDos[dateKey]) {
+    setTotalToDos((prev) => {
+      const totalToDos: ITotalToDos = { ...prev, [dateKey]: { toDos: [] } };
+      localStorage.setItem(TODOS_KEY, JSON.stringify(totalToDos));
+      return totalToDos;
+    });
+  }
   useEffect(() => {
     if (savedToDos && savedToDos !== JSON.stringify(totalToDos)) {
       setTotalToDos(JSON.parse(savedToDos));
