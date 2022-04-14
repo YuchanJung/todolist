@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import {
+  allToDosState,
   dateState,
   isDarkState,
   ISDARK_KEY,
-  ITotalToDos,
   returnDateKey,
   TODOS_KEY,
-  totalToDosState,
 } from "../atom";
 import CreateToDo from "./CreateToDo";
 import DarkModeButton from "./DarkModeButton";
@@ -34,29 +33,21 @@ const Header = styled.header`
 const Title = styled.h1`
   font-family: "Roboto Slab", serif;
   font-size: 42px;
-  margin-left : 15px;
+  margin-left: 15px;
 `;
 
 const Body = styled.div``;
 
 function Home() {
-  const savedToDos = localStorage.getItem(TODOS_KEY);
+  const savedAllToDos = localStorage.getItem(TODOS_KEY);
   const savedIsDark = localStorage.getItem(ISDARK_KEY);
-  const [totalToDos, setTotalToDos] = useRecoilState(totalToDosState);
+  const [allToDos, setallToDos] = useRecoilState(allToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
-  if (!totalToDos[dateKey]) {
-    setTotalToDos((prev) => {
-      const totalToDos: ITotalToDos = { ...prev, [dateKey]: { toDos: [] } };
-      localStorage.setItem(TODOS_KEY, JSON.stringify(totalToDos));
-      return totalToDos;
-    });
-  }
   useEffect(() => {
-    if (savedToDos && savedToDos !== JSON.stringify(totalToDos)) {
-      setTotalToDos(JSON.parse(savedToDos));
-    } // have to change the logic..
+    if (savedAllToDos) setallToDos(JSON.parse(savedAllToDos));
+    else localStorage.setItem(TODOS_KEY, JSON.stringify(allToDos));
     if (savedIsDark) setIsDark(JSON.parse(savedIsDark));
     else localStorage.setItem(ISDARK_KEY, JSON.stringify(isDark));
   }, []);
@@ -70,7 +61,7 @@ function Home() {
   return (
     <Container>
       <Header>
-        <Title>{totalToDos[dateKey].toDos.length} Tasks</Title>
+        <Title>{allToDos[dateKey].toDos.length} Tasks</Title>
         <DarkModeButton />
       </Header>
       {/*<SelectCategory />*/}

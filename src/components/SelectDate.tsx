@@ -4,13 +4,13 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import {
+  allToDosState,
   dateState,
+  IAllToDos,
   IDate,
-  ITotalToDos,
   returnDate,
   returnDateKey,
   TODOS_KEY,
-  totalToDosState,
 } from "../atom";
 
 const Container = styled.div`
@@ -63,6 +63,7 @@ function changeDate(date: IDate, direction: string) {
 function SelectDate() {
   // const [category, setCategory] = useRecoilState(categoryState);
   const [date, setDate] = useRecoilState(dateState);
+  const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const monthNames = [
     "Jan",
     "Feb",
@@ -79,8 +80,19 @@ function SelectDate() {
   ];
   const onClick = (event: React.FormEvent<HTMLButtonElement>) => {
     const direction = event.currentTarget.value;
-    const dateChanged = changeDate(date, direction);
-    setDate(dateChanged);
+    const changedDate = changeDate(date, direction);
+    const dateKey = returnDateKey(changedDate);
+    if (!allToDos[dateKey]) {
+      setAllToDos((prevAllToDos) => {
+        const newAllToDos: IAllToDos = {
+          ...prevAllToDos,
+          [dateKey]: { toDos: [] },
+        };
+        localStorage.setItem(TODOS_KEY, JSON.stringify(newAllToDos));
+        return newAllToDos;
+      });
+    }
+    setDate(changedDate);
   };
   return (
     <Container>

@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
+  allToDosState,
   categoryState,
   dateState,
-  ITotalToDos,
+  IAllToDos,
   returnDateKey,
   TODOS_KEY,
-  totalToDosState,
 } from "../atom";
 
 const Container = styled.div`
@@ -89,23 +89,23 @@ function CreateToDo() {
     formState: { errors },
     setValue,
   } = useForm<IForm>();
-  const setTotalToDos = useSetRecoilState(totalToDosState);
+  const setAllToDos = useSetRecoilState(allToDosState);
   const category = useRecoilValue(categoryState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
   const onValid = ({ toDo }: IForm) => {
-    setTotalToDos((prev) => {
-      const oldToDos = prev[dateKey].toDos;
+    setAllToDos((prevAllToDos) => {
+      const oldToDos = prevAllToDos[dateKey].toDos;
       const newToDos = [
         ...oldToDos,
         { text: toDo, id: Date.now(), category, checked: false, date },
       ];
-      const totalTodos: ITotalToDos = {
-        ...prev,
+      const newAllToDos: IAllToDos = {
+        ...prevAllToDos,
         [dateKey]: { toDos: newToDos },
       };
-      localStorage.setItem(TODOS_KEY, JSON.stringify(totalTodos));
-      return totalTodos;
+      localStorage.setItem(TODOS_KEY, JSON.stringify(newAllToDos));
+      return newAllToDos;
     });
     setValue("toDo", "");
     // useRecoilState 사용 후 lacalStorage.setItem(TODOS_KEY, toDos); 하면 prev todos가 저장됨. why?

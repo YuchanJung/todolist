@@ -3,12 +3,12 @@ import { Draggable } from "react-beautiful-dnd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
+  allToDosState,
   dateState,
+  IAllToDos,
   IToDo,
-  ITotalToDos,
   returnDateKey,
   TODOS_KEY,
-  totalToDosState,
 } from "../atom";
 
 const Wrapper = styled.div`
@@ -68,7 +68,7 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
 function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
   const { text, id, category, checked, date } = toDo;
   console.log(text);
-  const setTotalToDos = useSetRecoilState(totalToDosState);
+  const setAllToDos = useSetRecoilState(allToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
   const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
     /* 
@@ -76,30 +76,30 @@ function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
       currentTarget: { name },
     } = event;
     */
-    setTotalToDos((prevTotal) => {
-      const oldToDos = prevTotal[dateKey].toDos;
+    setAllToDos((prevAllToDos) => {
+      const oldToDos = prevAllToDos[dateKey].toDos;
       const targetIndex = oldToDos.findIndex((td) => td.id === id);
       const newToDos = deletedToDos(oldToDos, targetIndex);
-      const curTotal: ITotalToDos = {
-        ...prevTotal,
+      const newAllToDos: IAllToDos = {
+        ...prevAllToDos,
         [dateKey]: { toDos: newToDos },
       };
-      localStorage.setItem(TODOS_KEY, JSON.stringify(curTotal));
-      return curTotal;
+      localStorage.setItem(TODOS_KEY, JSON.stringify(newAllToDos));
+      return newAllToDos;
     });
   };
-  const onChange = () => {
-    setTotalToDos((prevTotal) => {
-      const oldToDos = prevTotal[dateKey].toDos;
+  const onCheck = () => {
+    setAllToDos((prevAllToDos) => {
+      const oldToDos = prevAllToDos[dateKey].toDos;
       const targetIndex = oldToDos.findIndex((td) => td.id === id);
       const newToDo = { text, id, category, checked: !checked, date };
       const newToDos = addedToDos(oldToDos, newToDo, targetIndex);
-      const curTotal: ITotalToDos = {
-        ...prevTotal,
+      const newAllToDos: IAllToDos = {
+        ...prevAllToDos,
         [dateKey]: { toDos: newToDos },
       };
-      localStorage.setItem(TODOS_KEY, JSON.stringify(curTotal));
-      return curTotal;
+      localStorage.setItem(TODOS_KEY, JSON.stringify(newAllToDos));
+      return newAllToDos;
     });
   };
   return (
@@ -113,7 +113,7 @@ function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
           <Input
             type="checkbox"
             checked={checked}
-            onChange={onChange}
+            onChange={onCheck}
             id={id.toString()}
           />
           <label htmlFor={id.toString()}>{text}</label>

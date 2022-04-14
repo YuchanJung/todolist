@@ -23,7 +23,7 @@ export interface IToDo {
   date: IDate;
 }
 
-export interface ITotalToDos {
+export interface IAllToDos {
   [date: number]: {
     toDos: IToDo[];
   };
@@ -47,8 +47,8 @@ export const isDarkState = atom({
   default: false,
 });
 
-export const totalToDosState = atom<ITotalToDos>({
-  key: "totalToDos",
+export const allToDosState = atom<IAllToDos>({
+  key: "allToDos",
   default: { [returnDateKey({ ...returnDate(new Date()) })]: { toDos: [] } },
 });
 

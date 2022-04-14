@@ -2,11 +2,11 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import {
+  allToDosState,
   dateState,
-  IToDo,
+  IAllToDos,
   returnDateKey,
   TODOS_KEY,
-  totalToDosState,
 } from "../atom";
 import DraggableToDo from "./DraggableToDo";
 
@@ -25,51 +25,23 @@ const Contents = styled.div`
     border-radius: 10px;
   }
 `;
-
-function returnTargetToDo(toDosByDate: IToDo[], draggableId: string) {
-  const targetIndex = toDosByDate.findIndex(
-    (toDo) => toDo.id === Number(draggableId)
-  );
-  return toDosByDate[targetIndex];
-}
-
-function changeToDosIndex(newToDos: IToDo[], oldToDos: IToDo[]) {
-  const returnToDos = oldToDos.map((toDo) => {
-    let newToDo: IToDo = toDo;
-    newToDos.forEach((toDoDate, index) => {
-      if (toDoDate.id === toDo.id) {
-        newToDo = {
-          text: toDo.text,
-          id: toDo.id,
-          category: toDo.category,
-          checked: toDo.checked,
-          date: toDo.date,
-        };
-        console.log(index);
-      }
-    });
-    return newToDo;
-  });
-  console.log(returnToDos);
-  return returnToDos;
-}
-
+    
 function ToDoList() {
-  const [totalToDos, setTotalToDos] = useRecoilState(totalToDosState);
+  const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
-  const toDosByDate = totalToDos[dateKey].toDos;
+  const toDosByDate = allToDos[dateKey].toDos;
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
     if (!destination) return;
-    setTotalToDos((prevTotal) => {
-      const toDosCopy = [...prevTotal[dateKey].toDos];
-      const targetToDo = returnTargetToDo(toDosCopy, draggableId);
+    setAllToDos((prevAllToDos) => {
+      const toDosCopy = [...prevAllToDos[dateKey].toDos];
+      const targetToDo = toDosCopy[source.index];
       toDosCopy.splice(source.index, 1);
       toDosCopy.splice(destination.index, 0, targetToDo);
       // returnTargetToDo를 바로 넣을 시 error. (Uncaught TypeError: Cannot read properties of undefined (reading 'id')) why?
-      const curTotal = { ...prevTotal, [dateKey]: { toDos: toDosCopy } };
-      localStorage.setItem(TODOS_KEY, JSON.stringify(curTotal));
-      return curTotal;
+      const newAllToDos: IAllToDos = { ...prevAllToDos, [dateKey]: { toDos: toDosCopy } };
+      localStorage.setItem(TODOS_KEY, JSON.stringify(newAllToDos));
+      return newAllToDos;
     });
   };
   return (
