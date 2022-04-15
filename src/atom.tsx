@@ -55,6 +55,7 @@ export const allToDosState = atom<IAllToDos>({
 export const dateState = atom<IDate>({
   key: "date",
   default: returnDate(new Date()),
+  // for debugging => new Date(new Date().setDate(new Date().getDate() + 1)) & need to change allToDoState
 });
 
 export const categoryState = atom<Categories>({

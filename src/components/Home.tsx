@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {
   allToDosState,
   dateState,
+  IAllToDos,
   isDarkState,
   ISDARK_KEY,
   returnDateKey,
@@ -38,16 +39,33 @@ const Title = styled.h1`
 
 const Body = styled.div``;
 
+function updateAllToDos(savedAllToDos: string, dateKey: number) {
+  const tempAllToDos: IAllToDos = { ...JSON.parse(savedAllToDos) };
+  if (!tempAllToDos[dateKey]) {
+    const newAllToDos: IAllToDos = {
+      ...tempAllToDos,
+      [dateKey]: { toDos: [] },
+    };
+    localStorage.setItem(TODOS_KEY, JSON.stringify(newAllToDos));
+    return newAllToDos;
+  }
+  return tempAllToDos;
+}
+
 function Home() {
-  const savedAllToDos = localStorage.getItem(TODOS_KEY);
-  const savedIsDark = localStorage.getItem(ISDARK_KEY);
-  const [allToDos, setallToDos] = useRecoilState(allToDosState);
+  const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
+  const toDosByDate = allToDos[dateKey];
+  console.log(dateKey);
   useEffect(() => {
-    if (savedAllToDos) setallToDos(JSON.parse(savedAllToDos));
-    else localStorage.setItem(TODOS_KEY, JSON.stringify(allToDos));
+    // first rendering
+    const savedAllToDos = localStorage.getItem(TODOS_KEY);
+    const savedIsDark = localStorage.getItem(ISDARK_KEY);
+    if (savedAllToDos) {
+      setAllToDos(() => updateAllToDos(savedAllToDos, dateKey));
+    } else localStorage.setItem(TODOS_KEY, JSON.stringify(allToDos));
     if (savedIsDark) setIsDark(JSON.parse(savedIsDark));
     else localStorage.setItem(ISDARK_KEY, JSON.stringify(isDark));
   }, []);
@@ -61,14 +79,14 @@ function Home() {
   return (
     <Container>
       <Header>
-        <Title>{allToDos[dateKey].toDos.length} Tasks</Title>
+        <Title>{toDosByDate ? toDosByDate.toDos.length : 0} Tasks</Title>
         <DarkModeButton />
       </Header>
       {/*<SelectCategory />*/}
       <Body>
         <SelectDate />
         <CreateToDo />
-        <ToDoList />
+        {toDosByDate && <ToDoList />}
       </Body>
     </Container>
   );
