@@ -10,7 +10,7 @@ import {
   TODOS_KEY,
 } from "../atom";
 
-const Container = styled.div`
+const Wrapper = styled.div`
   width: 90%;
   margin-left: 5%;
   height: 50px;
@@ -42,7 +42,7 @@ const Input = styled.input`
   }
 `;
 
-const CreateButton = styled.button`
+const Button = styled.button`
   width: 30px;
   height: 30px;
   -webkit-border-radius: 15px;
@@ -111,7 +111,7 @@ function CreateToDo() {
     // useRecoilState 사용 후 lacalStorage.setItem(TODOS_KEY, toDos); 하면 prev todos가 저장됨. why?
   };
   return (
-    <Container>
+    <Wrapper>
       <Form onSubmit={handleSubmit(onValid)}>
         <Input
           {...register("toDo", {
@@ -120,10 +120,10 @@ function CreateToDo() {
           })}
           placeholder={`Write a ${category.toLowerCase()}`}
         />
-        <CreateButton />
+        <Button />
       </Form>
       <span>{errors.toDo?.message}</span>
-    </Container>
+    </Wrapper>
   );
 }
 

@@ -13,7 +13,7 @@ import {
   TODOS_KEY,
 } from "../atom";
 
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,7 +95,7 @@ function SelectDate() {
     setDate(changedDate);
   };
   return (
-    <Container>
+    <Wrapper>
       <LeftButton value="left" onClick={onClick}>
         <FontAwesomeIcon icon={faAngleLeft} className="angleLeft" />
       </LeftButton>
@@ -105,7 +105,7 @@ function SelectDate() {
       <RightButton value="right" onClick={onClick}>
         <FontAwesomeIcon icon={faAngleRight} className="angleRight" />
       </RightButton>
-    </Container>
+    </Wrapper>
   );
 }
 

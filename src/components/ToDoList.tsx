@@ -10,7 +10,7 @@ import {
 } from "../atom";
 import DraggableToDo from "./DraggableToDo";
 
-const Contents = styled.div`
+const Wrapper = styled.div`
   height: 240px;
   display: flex;
   flex-direction: column;
@@ -48,11 +48,11 @@ function ToDoList() {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="ToDoList">
         {(provided) => (
-          <Contents ref={provided.innerRef} {...provided.droppableProps}>
+          <Wrapper ref={provided.innerRef} {...provided.droppableProps}>
             {toDosByDate.map((toDo, index) => (
               <DraggableToDo key={toDo.id} toDo={toDo} index={index} />
             ))}
-          </Contents>
+          </Wrapper>
         )}
       </Droppable>
     </DragDropContext>

@@ -34,7 +34,7 @@ const Input = styled.input`
   }
 `;
 
-const DeleteButton = styled.button`
+const Button = styled.button`
   position: absolute;
   right: 10px;
   width: 65px;
@@ -117,9 +117,9 @@ function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
             id={id.toString()}
           />
           <label htmlFor={id.toString()}>{text}</label>
-          <DeleteButton name="DELETE" onClick={onDelete}>
+          <Button name="DELETE" onClick={onDelete}>
             Delete
-          </DeleteButton>
+          </Button>
         </Wrapper>
       )}
     </Draggable>

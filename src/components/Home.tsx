@@ -37,7 +37,7 @@ const Title = styled.h1`
   margin-left: 15px;
 `;
 
-const Body = styled.div``;
+const Contents = styled.div``;
 
 function updateAllToDos(savedAllToDos: string, dateKey: number) {
   const tempAllToDos: IAllToDos = { ...JSON.parse(savedAllToDos) };
@@ -70,10 +70,7 @@ function Home() {
     else localStorage.setItem(ISDARK_KEY, JSON.stringify(isDark));
   }, []);
   /* 
-  error handling => I think these codes should run only once. (without useEffect hook)
-  This issue affects onChange function in ToDo.tsx .
-  Can I use useEffect hook? 
-  link : https://github.com/facebookexperimental/Recoil/issues/12
+  error handling => link : https://github.com/facebookexperimental/Recoil/issues/12
   */
   // const toDosByCat = useRecoilValue(toDosCatSelector);
   return (
@@ -83,11 +80,11 @@ function Home() {
         <DarkModeButton />
       </Header>
       {/*<SelectCategory />*/}
-      <Body>
+      <Contents>
         <SelectDate />
         <CreateToDo />
         {toDosByDate && <ToDoList />}
-      </Body>
+      </Contents>
     </Container>
   );
 }
