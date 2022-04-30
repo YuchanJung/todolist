@@ -1,3 +1,4 @@
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -8,19 +9,37 @@ import {
   isDarkState,
   ISDARK_KEY,
   returnDateKey,
+  showingBarState,
   TODOS_KEY,
-} from "../atom";
+} from "../../atom";
+import Bars from "../icons/Bars";
 import CreateToDo from "./CreateToDo";
-import DarkModeButton from "./DarkModeButton";
 import SelectDate from "./SelectDate";
+import Setting from "../Setting/Setting";
 import ToDoList from "./ToDoList";
 
 const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BiggerWrapper = styled.div`
+  width: 380px;
+  height: 500px;
+  border-radius: 35px;
+  box-shadow: -2px 4px 20px 6px ${(props) => props.theme.cardShadowColor};
+  overflow: hidden;
+`;
+
+const Wrapper = styled(motion.div)`
   width: 380px;
   height: 500px;
   border-radius: 35px;
   background-color: ${(props) => props.theme.cardBgColor};
-  box-shadow: -2px 4px 20px 6px ${(props) => props.theme.cardShadowColor};
+  float: left;
 `;
 
 const Header = styled.header`
@@ -33,11 +52,23 @@ const Header = styled.header`
 
 const Title = styled.h1`
   font-family: "Roboto Slab", serif;
-  font-size: 42px;
+  font-size: 36px;
   margin-left: 15px;
 `;
 
 const Contents = styled.div``;
+
+const wrapperVariants: Variants = {
+  animate: (showingBar: boolean) => ({
+    x: showingBar ? -300 : 0,
+    borderTopRightRadius: showingBar ? 0 : 35,
+    borderBottomRightRadius: showingBar ? 0 : 35,
+    transition: {
+      type: "tween",
+      duration: 0.3,
+    },
+  }),
+};
 
 function updateAllToDos(savedAllToDos: string, dateKey: number) {
   const tempAllToDos: IAllToDos = { ...JSON.parse(savedAllToDos) };
@@ -55,6 +86,7 @@ function updateAllToDos(savedAllToDos: string, dateKey: number) {
 function Home() {
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
+  const showingBar = useRecoilValue(showingBarState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
   const toDosByDate = allToDos[dateKey];
@@ -75,16 +107,25 @@ function Home() {
   // const toDosByCat = useRecoilValue(toDosCatSelector);
   return (
     <Container>
-      <Header>
-        <Title>{toDosByDate ? toDosByDate.toDos.length : 0} Tasks</Title>
-        <DarkModeButton />
-      </Header>
-      {/*<SelectCategory />*/}
-      <Contents>
-        <SelectDate />
-        <CreateToDo />
-        {toDosByDate && <ToDoList />}
-      </Contents>
+      <BiggerWrapper>
+        <Wrapper
+          custom={showingBar}
+          variants={wrapperVariants}
+          animate="animate"
+        >
+          <Header>
+            <Title>{toDosByDate ? toDosByDate.toDos.length : 0} Tasks</Title>
+            <Bars />
+          </Header>
+          {/*<SelectCategory />*/}
+          <Contents>
+            <SelectDate />
+            <CreateToDo />
+            {toDosByDate && <ToDoList />}
+          </Contents>
+        </Wrapper>
+        <AnimatePresence>{showingBar && <Setting />}</AnimatePresence>
+      </BiggerWrapper>
     </Container>
   );
 }

@@ -6,7 +6,11 @@
     color: #f39c12;
 }
 
-.angleLeft, .angleRight{
-    width: 20px;
-    height: 20px;
+.prevDate,
+.nextDate {
+    font-size: 20px;
+}
+
+.backHome {
+    font-size: 36px;
 }

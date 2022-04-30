@@ -9,7 +9,7 @@ import {
   IToDo,
   returnDateKey,
   TODOS_KEY,
-} from "../atom";
+} from "../../atom";
 
 const Wrapper = styled.div`
   position: relative;

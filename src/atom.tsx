@@ -58,6 +58,11 @@ export const dateState = atom<IDate>({
   // for debugging => new Date(new Date().setDate(new Date().getDate() + 1)) & need to change allToDoState
 });
 
+export const showingBarState = atom({
+  key: "showingBar",
+  default: false,
+});
+
 export const categoryState = atom<Categories>({
   key: "category",
   default: Categories.TO_DO,

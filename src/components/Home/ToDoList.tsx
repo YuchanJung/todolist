@@ -7,10 +7,10 @@ import {
   IAllToDos,
   returnDateKey,
   TODOS_KEY,
-} from "../atom";
+} from "../../atom";
 import DraggableToDo from "./DraggableToDo";
 
-const Wrapper = styled.div`
+const ToDoBoard = styled.div`
   height: 240px;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   }
 `;
     
-function ToDoList() {
+function ToDoList() { 
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
@@ -48,11 +48,11 @@ function ToDoList() {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="ToDoList">
         {(provided) => (
-          <Wrapper ref={provided.innerRef} {...provided.droppableProps}>
+          <ToDoBoard ref={provided.innerRef} {...provided.droppableProps}>
             {toDosByDate.map((toDo, index) => (
               <DraggableToDo key={toDo.id} toDo={toDo} index={index} />
             ))}
-          </Wrapper>
+          </ToDoBoard>
         )}
       </Droppable>
     </DragDropContext>

@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import "./font.css";
-import "./icon.css"
+import "./icon.css";
 
 const Globalstyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -54,10 +54,6 @@ table {
   box-sizing: border-box;
 }
 body {
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
   font-family: 'Source Sans Pro', sans-serif;
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};

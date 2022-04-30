@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { Categories, categoryState } from "../atom";
+import { Categories, categoryState } from "../../atom";
 
 function SelectCategory() {
   const [category, setCategory] = useRecoilState(categoryState);

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { isDarkState, ISDARK_KEY } from "../atom";
+import { isDarkState, ISDARK_KEY } from "../../atom";
 
 const Wrapper = styled.div`
   margin-right: 10px;

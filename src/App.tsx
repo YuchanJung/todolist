@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { isDarkState } from "./atom";
-import Home from "./components/Home";
+import Home from "./components/Home/Home";
 import Globalstyle from "./styles/globalStyle";
 import { darkTheme, lightTheme } from "./theme";
 

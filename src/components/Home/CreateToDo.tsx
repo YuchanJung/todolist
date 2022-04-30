@@ -8,7 +8,7 @@ import {
   IAllToDos,
   returnDateKey,
   TODOS_KEY,
-} from "../atom";
+} from "../../atom";
 
 const Wrapper = styled.div`
   width: 90%;

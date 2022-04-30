@@ -1,5 +1,3 @@
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -11,7 +9,8 @@ import {
   returnDate,
   returnDateKey,
   TODOS_KEY,
-} from "../atom";
+} from "../../atom";
+import Arrow from "../icons/Arrow";
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,12 +26,12 @@ const ChangeDateButton = styled.button`
   background-color: transparent;
 `;
 
-const LeftButton = styled(ChangeDateButton)`
+const PrevButton = styled(ChangeDateButton)`
   position: absolute;
   left: 5px;
 `;
 
-const RightButton = styled(ChangeDateButton)`
+const NextButton = styled(ChangeDateButton)`
   position: absolute;
   right: 5px;
 `;
@@ -96,15 +95,15 @@ function SelectDate() {
   };
   return (
     <Wrapper>
-      <LeftButton value="left" onClick={onClick}>
-        <FontAwesomeIcon icon={faAngleLeft} className="angleLeft" />
-      </LeftButton>
+      <PrevButton value="left" onClick={onClick}>
+        <Arrow direction={true} className="prevDate" />
+      </PrevButton>
       <DateSpan>
         {monthNames[date.month]}&nbsp;&nbsp;{date.day}
       </DateSpan>
-      <RightButton value="right" onClick={onClick}>
-        <FontAwesomeIcon icon={faAngleRight} className="angleRight" />
-      </RightButton>
+      <NextButton value="right" onClick={onClick}>
+        <Arrow direction={false} className="nextDate" />
+      </NextButton>
     </Wrapper>
   );
 }
