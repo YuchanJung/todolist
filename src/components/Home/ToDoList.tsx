@@ -10,7 +10,14 @@ import {
 } from "../../atom";
 import DraggableToDo from "./DraggableToDo";
 
+const Wrapper = styled.div`
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+`;
+
 const ToDoBoard = styled.div`
+  width: 100%;
   height: 240px;
   display: flex;
   flex-direction: column;

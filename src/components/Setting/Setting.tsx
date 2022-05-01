@@ -1,4 +1,6 @@
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { showingBarState } from "../../atom";
 import Arrow from "../icons/Arrow";
 import DarkModeButton from "./DarkModeButton";
 
@@ -38,11 +40,19 @@ const SettingDarkMode = styled.div`
   align-items: center;
 `;
 
+const PrevButton = styled.button`
+  border: none;
+  background-color: transparent;
+`;
+
 function Setting() {
+  const setShowingBar = useSetRecoilState(showingBarState);
   return (
     <Wrapper>
       <Header>
-        <Arrow direction={true} className="backHome" />
+        <PrevButton onClick={() => setShowingBar((prev) => !prev)}>
+          <Arrow direction={true} className="backHome" />
+        </PrevButton>
         <Title>Setting</Title>
       </Header>
       <Contents>
