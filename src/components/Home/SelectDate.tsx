@@ -16,8 +16,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 320px;
   height: 40px;
-  margin: 0px 30px;
   position: relative;
 `;
 

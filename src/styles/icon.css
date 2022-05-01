@@ -12,5 +12,10 @@
 }
 
 .backHome {
-    font-size: 36px;
+    font-size: 28px;
+}
+
+.bars {
+    font-size: 28px;
+    margin-right: 10px;
 }

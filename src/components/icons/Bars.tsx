@@ -9,7 +9,7 @@ function Bars() {
       <FontAwesomeIcon
         onClick={() => setShowingBar((prev) => !prev)}
         icon={faBars}
-        style={{ fontSize: 28, marginRight: 10 }}
+        className="bars"
       />
     );
 }

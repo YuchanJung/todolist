@@ -59,6 +59,9 @@ body {
   color: ${(props) => props.theme.textColor};
   transition: 0.2s ease-in;
 }
+h1 {
+  font-family: "Roboto Slab", serif;
+}
 a {
   text-decoration: none;
   color: inherit;

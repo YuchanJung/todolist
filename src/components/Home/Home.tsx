@@ -31,15 +31,15 @@ const BiggerWrapper = styled.div`
   height: 500px;
   border-radius: 35px;
   box-shadow: -2px 4px 20px 6px ${(props) => props.theme.cardShadowColor};
+  background-color: ${(props) => props.theme.cardBgColor};
   overflow: hidden;
+  display: flex;
 `;
 
 const Wrapper = styled(motion.div)`
-  width: 380px;
+  min-width: 380px;
   height: 500px;
-  border-radius: 35px;
   background-color: ${(props) => props.theme.cardBgColor};
-  float: left;
 `;
 
 const Header = styled.header`
@@ -51,12 +51,17 @@ const Header = styled.header`
 `;
 
 const Title = styled.h1`
-  font-family: "Roboto Slab", serif;
   font-size: 36px;
   margin-left: 15px;
 `;
 
-const Contents = styled.div``;
+const Contents = styled.div`
+  width: 100%;
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const wrapperVariants: Variants = {
   animate: (showingBar: boolean) => ({

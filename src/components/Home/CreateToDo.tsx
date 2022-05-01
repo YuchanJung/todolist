@@ -12,7 +12,6 @@ import {
 
 const Wrapper = styled.div`
   width: 90%;
-  margin-left: 5%;
   height: 50px;
   position: relative;
   span {

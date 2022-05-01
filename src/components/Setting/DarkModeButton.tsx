@@ -4,10 +4,6 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { isDarkState, ISDARK_KEY } from "../../atom";
 
-const Wrapper = styled.div`
-  margin-right: 10px;
-`;
-
 const Input = styled.input`
   opacity: 0;
   position: absolute;
@@ -27,7 +23,7 @@ const Label = styled.label`
   height: 26px;
   width: 50px;
   border-radius: 50px;
-  transform: scale(1.2);
+  transform: scale(0.95);
 `;
 
 const ToggleBall = styled.div`
@@ -50,7 +46,7 @@ function DarkModeButton() {
     });
   };
   return (
-    <Wrapper>
+    <>
       <Input
         type="checkbox"
         checked={isDark}
@@ -62,7 +58,7 @@ function DarkModeButton() {
         <FontAwesomeIcon icon={faSun} className="faSun" />
         <ToggleBall />
       </Label>
-    </Wrapper>
+    </>
   );
 }
 
