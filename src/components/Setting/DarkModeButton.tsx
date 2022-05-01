@@ -30,7 +30,7 @@ const ToggleBall = styled.div`
   position: absolute;
   top: 2px;
   right: 2px;
-  background-color: ${(props) => props.theme.cardBgColor};
+  background-color: ${(props) => props.theme.settingBgColor};
   width: 22px;
   height: 22px;
   border-radius: 50%;

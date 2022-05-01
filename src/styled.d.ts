@@ -9,5 +9,6 @@ declare module 'styled-components' {
     accentColor: string;
     cardBgColor: string;
     cardShadowColor: string;
+    settingBgColor: string;
   }
 }

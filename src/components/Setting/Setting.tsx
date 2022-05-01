@@ -1,25 +1,13 @@
-import { motion, Variants } from "framer-motion";
 import styled from "styled-components";
 import Arrow from "../icons/Arrow";
 import DarkModeButton from "./DarkModeButton";
 
-const Wrapper = styled(motion.div)`
+const Wrapper = styled.div`
+  width: 300px;
   min-width: 300px;
   height: 500px;
-  border-radius: 35px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.settingBgColor};
 `;
-
-const wrapperVariants: Variants = {
-  animate: {
-    x: -300,
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-  },
-  exit: {
-    x: 0,
-  },
-};
 
 const Header = styled.header`
   width: 100%;
@@ -52,12 +40,7 @@ const SettingDarkMode = styled.div`
 
 function Setting() {
   return (
-    <Wrapper
-      variants={wrapperVariants}
-      animate="animate"
-      exit="exit"
-      transition={{ type: "tween", duration: 0.3 }}
-    >
+    <Wrapper>
       <Header>
         <Arrow direction={true} className="backHome" />
         <Title>Setting</Title>
