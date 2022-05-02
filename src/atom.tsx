@@ -63,6 +63,11 @@ export const showingBarState = atom({
   default: false,
 });
 
+export const isBackState = atom({
+  key: "isBackState",
+  default: false,
+})
+
 export const categoryState = atom<Categories>({
   key: "category",
   default: Categories.TO_DO,

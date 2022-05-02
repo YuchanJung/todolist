@@ -1,3 +1,4 @@
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -5,12 +6,13 @@ import {
   allToDosState,
   dateState,
   IAllToDos,
+  isBackState,
   returnDateKey,
   TODOS_KEY,
 } from "../../atom";
 import DraggableToDo from "./DraggableToDo";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   width: 100%;
   height: 240px;
   overflow: hidden;
@@ -32,9 +34,22 @@ const ToDoBoard = styled.div`
     border-radius: 10px;
   }
 `;
-    
-function ToDoList() { 
+
+const wrapperVariants: Variants = {
+  initial: (isBack: boolean) => ({
+    x: isBack ? -500 : 500,
+  }),
+  animate: {
+    x: 0,
+  },
+  exit: (isBack: boolean) => ({
+    x: isBack ? 500 : -500,
+  }),
+};
+
+function ToDoList() {
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
+  const isBack = useRecoilValue(isBackState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
   const toDosByDate = allToDos[dateKey].toDos;
@@ -46,23 +61,38 @@ function ToDoList() {
       toDosCopy.splice(source.index, 1);
       toDosCopy.splice(destination.index, 0, targetToDo);
       // returnTargetToDo를 바로 넣을 시 error. (Uncaught TypeError: Cannot read properties of undefined (reading 'id')) why?
-      const newAllToDos: IAllToDos = { ...prevAllToDos, [dateKey]: { toDos: toDosCopy } };
+      const newAllToDos: IAllToDos = {
+        ...prevAllToDos,
+        [dateKey]: { toDos: toDosCopy },
+      };
       localStorage.setItem(TODOS_KEY, JSON.stringify(newAllToDos));
       return newAllToDos;
     });
   };
+  console.log(isBack);
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="ToDoList">
-        {(provided) => (
-          <ToDoBoard ref={provided.innerRef} {...provided.droppableProps}>
-            {toDosByDate.map((toDo, index) => (
-              <DraggableToDo key={toDo.id} toDo={toDo} index={index} />
-            ))}
-          </ToDoBoard>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <AnimatePresence custom={isBack}>
+      <Wrapper
+        key={dateKey}
+        variants={wrapperVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{ duration: 0.5 }}
+      >
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="ToDoList">
+            {(provided) => (
+              <ToDoBoard ref={provided.innerRef} {...provided.droppableProps}>
+                {toDosByDate.map((toDo, index) => (
+                  <DraggableToDo key={toDo.id} toDo={toDo} index={index} />
+                ))}
+              </ToDoBoard>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </Wrapper>
+    </AnimatePresence>
   );
 }
 

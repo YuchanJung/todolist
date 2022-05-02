@@ -1,16 +1,20 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
   allToDosState,
   dateState,
   IAllToDos,
   IDate,
+  isBackState,
   returnDate,
   returnDateKey,
   TODOS_KEY,
 } from "../../atom";
 import Arrow from "../icons/Arrow";
+
+const PREV = "prev";
+const NEXT = "next";
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,9 +56,9 @@ function changeCat(category: Categories, direction: string) {
 }
 */
 
-function changeDate(date: IDate, direction: string) {
+function returnChangedDate(date: IDate, direction: string) {
   const today = new Date(date.year, date.month, date.day);
-  const change = direction === "left" ? -1 : 1;
+  const change = direction === PREV ? -1 : 1;
   const yesterday = new Date(today.setDate(today.getDate() + change));
   return returnDate(yesterday);
 }
@@ -63,6 +67,7 @@ function SelectDate() {
   // const [category, setCategory] = useRecoilState(categoryState);
   const [date, setDate] = useRecoilState(dateState);
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
+  const setIsBack = useSetRecoilState(isBackState);
   const monthNames = [
     "Jan",
     "Feb",
@@ -77,9 +82,9 @@ function SelectDate() {
     "Nov",
     "Dec",
   ];
-  const onClick = (event: React.FormEvent<HTMLButtonElement>) => {
+  const changeDate = (event: React.FormEvent<HTMLButtonElement>) => {
     const direction = event.currentTarget.value;
-    const changedDate = changeDate(date, direction);
+    const changedDate = returnChangedDate(date, direction);
     const dateKey = returnDateKey(changedDate);
     if (!allToDos[dateKey]) {
       setAllToDos((prevAllToDos) => {
@@ -91,17 +96,18 @@ function SelectDate() {
         return newAllToDos;
       });
     }
+    setIsBack(direction === PREV ? true : false);
     setDate(changedDate);
   };
   return (
     <Wrapper>
-      <PrevButton value="left" onClick={onClick}>
+      <PrevButton value={PREV} onClick={changeDate}>
         <Arrow direction={true} className="prevDate" />
       </PrevButton>
       <DateSpan>
         {monthNames[date.month]}&nbsp;&nbsp;{date.day}
       </DateSpan>
-      <NextButton value="right" onClick={onClick}>
+      <NextButton value={NEXT} onClick={changeDate}>
         <Arrow direction={false} className="nextDate" />
       </NextButton>
     </Wrapper>
