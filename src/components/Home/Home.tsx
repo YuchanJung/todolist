@@ -76,7 +76,6 @@ function Home() {
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
   const toDosByDate = allToDos[dateKey];
-  console.log(dateKey);
   useEffect(() => {
     // first rendering
     const savedAllToDos = localStorage.getItem(TODOS_KEY);
