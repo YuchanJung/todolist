@@ -15,7 +15,8 @@ import DraggableToDo from "./DraggableToDo";
 const Wrapper = styled(motion.div)`
   width: 100%;
   height: 240px;
-  overflow: hidden;
+  position: absolute;
+  top: 90px;
 `;
 
 const ToDoBoard = styled.div`
@@ -74,6 +75,7 @@ function ToDoList() {
     <AnimatePresence custom={isBack}>
       <Wrapper
         key={dateKey}
+        custom={isBack}
         variants={wrapperVariants}
         initial="initial"
         animate="animate"

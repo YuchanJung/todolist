@@ -54,6 +54,7 @@ const Contents = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 
 function updateAllToDos(savedAllToDos: string, dateKey: number) {
