@@ -1,5 +1,5 @@
 import { motion, Variants } from "framer-motion";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { showingBarState } from "../atom";
 import Home from "./Home/Home";
@@ -40,13 +40,42 @@ const pagesVariants: Variants = {
   }),
 };
 
+const Overlay = styled(motion.div)`
+  width: 380px;
+  min-width: 380px;
+  height: 500px;
+  border-radius: 35px;
+  background-color: ${(props) => props.theme.cardBgColor};
+  position: absolute;
+`;
+
+const overlayVariants: Variants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 0.6,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
 function Frame() {
-  const showingBar = useRecoilValue(showingBarState);
+  const [showingBar, setShowingBar] = useRecoilState(showingBarState);
   return (
     <Container>
       <MainBox>
         <Pages custom={showingBar} variants={pagesVariants} animate="animate">
           <Home />
+          {showingBar && (
+            <Overlay
+              onClick={() => setShowingBar((prev) => !prev)}
+              variants={overlayVariants}
+              initial="initial"
+              animate="animate"
+            />
+          )}
           <Setting />
         </Pages>
       </MainBox>
