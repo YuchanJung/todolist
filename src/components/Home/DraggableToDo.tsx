@@ -1,7 +1,7 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   allToDosState,
   dateState,
@@ -10,6 +10,7 @@ import {
   returnDateKey,
   TODOS_KEY,
 } from "../../atom";
+import Check from "../icons/Check";
 
 const Wrapper = styled.div`
   position: relative;
@@ -17,24 +18,48 @@ const Wrapper = styled.div`
   align-items: center;
   width: 90%;
   min-height: 40px;
+  padding: 0px 10px;
+  margin: 5px 0px;
+`;
+
+const CheckBox = styled.div<ICheckedProps>`
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  margin-top: 2px;
+  border: 2px solid ${(props) => props.theme.accentColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease-in;
+  ${(props) =>
+    props.checked &&
+    css`
+      border: 0px;
+      color: ${(props) => props.theme.checkColor};
+      background-color: ${(props) => props.theme.checkBoxColor};
+    `}
+`;
+
+const Text = styled.span<ICheckedProps>`
+  display: inline-block;
+  position: absolute;
+  left: 50px;
   font-size: 24px;
-  padding: 5px 10px;
-  margin: 4px;
-  label {
-    display: inline-block;
-    margin-left: 7px;
-  }
+  transition: 0.2s ease-in;
+  ${(props) =>
+    props.checked &&
+    css`
+      text-decoration: line-through;
+      color: ${(props) => props.theme.accentColor};
+    `}
 `;
 
-const Input = styled.input`
-  margin-right: 10px;
-  :checked + label {
-    color: ${(props) => props.theme.cardShadowColor}; // have to change
-    text-decoration: line-through;
-  }
-`;
+interface ICheckedProps {
+  checked: boolean;
+}
 
-const Button = styled.button`
+const DeleteButton = styled.button`
   position: absolute;
   right: 10px;
   width: 65px;
@@ -109,16 +134,13 @@ function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
           {...provided.dragHandleProps}
           {...provided.draggableProps}
         >
-          <Input
-            type="checkbox"
-            checked={checked}
-            onChange={onCheck}
-            id={id.toString()}
-          />
-          <label htmlFor={id.toString()}>{text}</label>
-          <Button name="DELETE" onClick={onDelete}>
+          <CheckBox onClick={onCheck} checked={checked}>
+            {checked && <Check />}
+          </CheckBox>
+          <Text checked={checked}>{text}</Text>
+          <DeleteButton name="DELETE" onClick={onDelete}>
             Delete
-          </Button>
+          </DeleteButton>
         </Wrapper>
       )}
     </Draggable>

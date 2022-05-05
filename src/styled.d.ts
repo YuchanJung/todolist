@@ -10,5 +10,7 @@ declare module 'styled-components' {
     cardBgColor: string;
     cardShadowColor: string;
     settingBgColor: string;
+    checkColor: string; // check icon color
+    checkBoxColor: string;
   }
 }
