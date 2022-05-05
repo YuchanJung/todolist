@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { css } from "styled-components";
@@ -11,6 +11,7 @@ import {
   TODOS_KEY,
 } from "../../atom";
 import Check from "../icons/Check";
+import DragButton from "./DragButton";
 
 const Wrapper = styled.div`
   position: relative;
@@ -43,16 +44,22 @@ const CheckBox = styled.div<ICheckedProps>`
 
 const Text = styled.span<ICheckedProps>`
   display: inline-block;
-  position: absolute;
-  left: 50px;
+  width: 180px;
   font-size: 24px;
   transition: 0.2s ease-in;
+  margin-left: 20px;
   ${(props) =>
     props.checked &&
     css`
       text-decoration: line-through;
       color: ${(props) => props.theme.accentColor};
     `}
+`;
+
+const DragBox = styled.div`
+  width: 30px;
+  height: 40px;
+  min-height: 40px;
 `;
 
 interface ICheckedProps {
@@ -91,6 +98,7 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
 }
 
 function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
+  const [isShown, setIsShown] = useState(false);
   const { text, id, category, checked, date } = toDo;
   const setAllToDos = useSetRecoilState(allToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
@@ -129,15 +137,18 @@ function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
   return (
     <Draggable draggableId={id.toString()} index={index}>
       {(provided) => (
-        <Wrapper
-          ref={provided.innerRef}
-          {...provided.dragHandleProps}
-          {...provided.draggableProps}
-        >
+        <Wrapper ref={provided.innerRef} {...provided.draggableProps}>
           <CheckBox onClick={onCheck} checked={checked}>
             {checked && <Check />}
           </CheckBox>
           <Text checked={checked}>{text}</Text>
+          <DragBox
+            {...provided.dragHandleProps}
+            onMouseEnter={() => setIsShown(true)}
+            onMouseLeave={() => setIsShown(false)}
+          >
+            {isShown && <DragButton />}
+          </DragBox>
           <DeleteButton name="DELETE" onClick={onDelete}>
             Delete
           </DeleteButton>

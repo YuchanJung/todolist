@@ -4,6 +4,8 @@ import { showingBarState } from "../../atom";
 import Arrow from "../icons/Arrow";
 import DarkModeButton from "./DarkModeButton";
 
+const PREV = "left";
+
 const Wrapper = styled.div`
   width: 300px;
   min-width: 300px;
@@ -51,7 +53,7 @@ function Setting() {
     <Wrapper>
       <Header>
         <PrevButton onClick={() => setShowingBar((prev) => !prev)}>
-          <Arrow direction={true} className="backHome" />
+          <Arrow direction={PREV} className="backHome" />
         </PrevButton>
         <Title>Setting</Title>
       </Header>

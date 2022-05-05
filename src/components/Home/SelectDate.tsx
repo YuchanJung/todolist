@@ -13,8 +13,8 @@ import {
 } from "../../atom";
 import Arrow from "../icons/Arrow";
 
-const PREV = "prev";
-const NEXT = "next";
+const PREV = "left";
+const NEXT = "right";
 
 const Wrapper = styled.div`
   display: flex;
@@ -102,13 +102,13 @@ function SelectDate() {
   return (
     <Wrapper>
       <PrevButton value={PREV} onClick={changeDate}>
-        <Arrow direction={true} className="prevDate" />
+        <Arrow direction={PREV} className="prevDate" />
       </PrevButton>
       <DateSpan>
         {monthNames[date.month]}&nbsp;&nbsp;{date.day}
       </DateSpan>
       <NextButton value={NEXT} onClick={changeDate}>
-        <Arrow direction={false} className="nextDate" />
+        <Arrow direction={NEXT} className="nextDate" />
       </NextButton>
     </Wrapper>
   );
