@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { css } from "styled-components";
@@ -29,6 +29,7 @@ const CheckBox = styled.div<ICheckedProps>`
   border-radius: 10px;
   margin-top: 2px;
   border: 2px solid ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.checkColor};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +38,6 @@ const CheckBox = styled.div<ICheckedProps>`
     props.checked &&
     css`
       border: 0px;
-      color: ${(props) => props.theme.checkColor};
       background-color: ${(props) => props.theme.checkBoxColor};
     `}
 `;
@@ -47,12 +47,12 @@ const Text = styled.span<ICheckedProps>`
   width: 180px;
   font-size: 24px;
   transition: 0.2s ease-in;
-  margin-left: 20px;
+  margin-left: 14px;
   ${(props) =>
     props.checked &&
     css`
-      text-decoration: line-through;
       color: ${(props) => props.theme.accentColor};
+      text-decoration: line-through;
     `}
 `;
 
@@ -98,7 +98,6 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
 }
 
 function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
-  const [isShown, setIsShown] = useState(false);
   const { text, id, category, checked, date } = toDo;
   const setAllToDos = useSetRecoilState(allToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
@@ -142,12 +141,8 @@ function DraggableToDo({ toDo, index }: IDraggableToDoProps) {
             {checked && <Check />}
           </CheckBox>
           <Text checked={checked}>{text}</Text>
-          <DragBox
-            {...provided.dragHandleProps}
-            onMouseEnter={() => setIsShown(true)}
-            onMouseLeave={() => setIsShown(false)}
-          >
-            {isShown && <DragButton />}
+          <DragBox {...provided.dragHandleProps}>
+            <DragButton />
           </DragBox>
           <DeleteButton name="DELETE" onClick={onDelete}>
             Delete
