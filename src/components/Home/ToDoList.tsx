@@ -89,6 +89,7 @@ function ToDoList() {
                 {toDosByDate.map((toDo, index) => (
                   <DraggableToDo key={toDo.id} toDo={toDo} index={index} />
                 ))}
+                {provided.placeholder}
               </ToDoBoard>
             )}
           </Droppable>

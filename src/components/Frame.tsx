@@ -7,7 +7,9 @@ import Setting from "./Setting/Setting";
 
 const Container = styled.div`
   width: 100vw;
+  min-width: 400px;
   height: 100vh;
+  min-height: 550px;
   display: flex;
   justify-content: center;
   align-items: center;

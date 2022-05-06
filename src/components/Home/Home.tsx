@@ -21,7 +21,6 @@ const Wrapper = styled(motion.div)`
   width: 380px;
   min-width: 380px;
   height: 500px;
-  border-radius: 35px;
   background-color: ${(props) => props.theme.cardBgColor};
 `;
 
