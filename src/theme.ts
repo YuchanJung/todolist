@@ -18,6 +18,6 @@ export const lightTheme: DefaultTheme = {
   cardBgColor: "white",
   cardShadowColor: "#bdc3c7",
   settingBgColor: "rgb(226, 230, 230)",
-  checkBoxColor: "#c7ecee",
+  checkBoxColor: "#3c6382",
   checkColor: "white",
 };
