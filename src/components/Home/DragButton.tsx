@@ -1,6 +1,6 @@
 import { motion, Variants } from "framer-motion";
 import styled from "styled-components";
-import Arrow from "../icons/Arrow";
+import ArrowIcon from "../icons/ArrowIcon";
 
 const Wrapper = styled(motion.div)`
   width: 30px;
@@ -21,8 +21,8 @@ const wrapperVariants: Variants = {
 function DragButton() {
   return (
     <Wrapper variants={wrapperVariants} whileHover="hover" whileTap="click">
-      <Arrow direction="up" className="dragUp" />
-      <Arrow direction="down" className="dragDown" />
+      <ArrowIcon direction="up" className="dragUp" />
+      <ArrowIcon direction="down" className="dragDown" />
     </Wrapper>
   );
 }

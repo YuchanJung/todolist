@@ -24,9 +24,10 @@
     font-size: 14px;
 }
 
-.dragUp {
+.dragUp {}
 
-}
-.dragDown {
-    
+.dragDown {}
+
+.ellipsisVertical {
+    font-size: 24px;
 }

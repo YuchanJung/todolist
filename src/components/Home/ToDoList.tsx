@@ -10,7 +10,7 @@ import {
   returnDateKey,
   TODOS_KEY,
 } from "../../atom";
-import DraggableToDo from "./DraggableToDo";
+import ToDo from "./ToDo";
 
 const Wrapper = styled(motion.div)`
   width: 100%;
@@ -87,7 +87,7 @@ function ToDoList() {
             {(provided) => (
               <ToDoBoard ref={provided.innerRef} {...provided.droppableProps}>
                 {toDosByDate.map((toDo, index) => (
-                  <DraggableToDo key={toDo.id} toDo={toDo} index={index} />
+                  <ToDo key={toDo.id} toDo={toDo} index={index} />
                 ))}
                 {provided.placeholder}
               </ToDoBoard>

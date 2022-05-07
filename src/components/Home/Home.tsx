@@ -12,7 +12,7 @@ import {
   showingBarState,
   TODOS_KEY,
 } from "../../atom";
-import Bars from "../icons/Bars";
+import BarsIcon from "../icons/BarsIcon";
 import CreateToDo from "./CreateToDo";
 import SelectDate from "./SelectDate";
 import ToDoList from "./ToDoList";
@@ -94,7 +94,7 @@ function Home() {
     <Wrapper custom={showingBar} variants={wrapperVariants} animate="animate">
       <Header>
         <Title>{toDosByDate ? toDosByDate.toDos.length : 0} Tasks</Title>
-        <Bars />
+        <BarsIcon />
       </Header>
       {/*<SelectCategory />*/}
       <Contents>

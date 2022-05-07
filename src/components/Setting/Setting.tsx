@@ -1,7 +1,7 @@
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { showingBarState } from "../../atom";
-import Arrow from "../icons/Arrow";
+import ArrowIcon from "../icons/ArrowIcon";
 import DarkModeButton from "./DarkModeButton";
 
 const PREV = "left";
@@ -53,7 +53,7 @@ function Setting() {
     <Wrapper>
       <Header>
         <PrevButton onClick={() => setShowingBar((prev) => !prev)}>
-          <Arrow direction={PREV} className="backHome" />
+          <ArrowIcon direction={PREV} className="backHome" />
         </PrevButton>
         <Title>Setting</Title>
       </Header>

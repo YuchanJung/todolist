@@ -11,7 +11,7 @@ import {
   returnDateKey,
   TODOS_KEY,
 } from "../../atom";
-import Arrow from "../icons/Arrow";
+import ArrowIcon from "../icons/ArrowIcon";
 
 const PREV = "left";
 const NEXT = "right";
@@ -102,13 +102,13 @@ function SelectDate() {
   return (
     <Wrapper>
       <PrevButton value={PREV} onClick={changeDate}>
-        <Arrow direction={PREV} className="prevDate" />
+        <ArrowIcon direction={PREV} className="prevDate" />
       </PrevButton>
       <DateSpan>
         {monthNames[date.month]}&nbsp;&nbsp;{date.day}
       </DateSpan>
       <NextButton value={NEXT} onClick={changeDate}>
-        <Arrow direction={NEXT} className="nextDate" />
+        <ArrowIcon direction={NEXT} className="nextDate" />
       </NextButton>
     </Wrapper>
   );
