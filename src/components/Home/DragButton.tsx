@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ArrowIcon from "../icons/ArrowIcon";
 
 const Wrapper = styled(motion.div)`
-  width: 30px;
+  width: 40px;
   height: 40px;
   min-height: 40px;
   display: flex;
@@ -31,7 +31,7 @@ export default DragButton;
 
 /*
 Error occurs when a component has props of Framer-Motion and React-Beautiful-Dnd together. 
-So, I create "DragBox", "DragButton" components separately
+So, I create "DragBox", "DragButton" components separately (DragButton.tsx in DragBox of ToDo.tsx)
 DragBox for dnd props(provided)
 DragButton for framer-motion
 */ 
