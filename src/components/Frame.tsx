@@ -19,8 +19,8 @@ const MainBox = styled.div`
   width: 380px;
   height: 500px;
   border-radius: 35px;
-  box-shadow: -2px 4px 20px 6px ${(props) => props.theme.cardShadowColor};
-  background-color: ${(props) => props.theme.cardBgColor};
+  box-shadow: -2px 4px 20px 6px ${(props) => props.theme.frameShadowColor};
+  background-color: ${(props) => props.theme.homeBgColor};
   overflow: hidden;
 `;
 
@@ -47,7 +47,7 @@ const Overlay = styled(motion.div)`
   min-width: 380px;
   height: 500px;
   border-radius: 35px;
-  background-color: ${(props) => props.theme.cardBgColor};
+  background-color: ${(props) => props.theme.homeBgColor};
   position: absolute;
 `;
 

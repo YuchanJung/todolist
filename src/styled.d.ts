@@ -7,10 +7,9 @@ declare module 'styled-components' {
     textColor: string;
     bgColor: string;
     accentColor: string;
-    cardBgColor: string;
-    cardShadowColor: string;
+    homeBgColor: string;
+    frameShadowColor: string;
     settingBgColor: string;
-    checkIconColor: string;
     checkBoxColor: string;
     whileDraggingColor: string;
   }

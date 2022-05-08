@@ -33,7 +33,7 @@ const CheckBox = styled.div<ICheckedProps>`
   border-radius: 10px;
   margin-top: 2px;
   border: 2px solid ${(props) => props.theme.accentColor};
-  color: ${(props) => props.theme.checkIconColor};
+  color: ${(props) => props.theme.homeBgColor};
   display: flex;
   justify-content: center;
   align-items: center;
