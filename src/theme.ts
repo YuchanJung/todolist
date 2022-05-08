@@ -4,11 +4,12 @@ export const darkTheme: DefaultTheme = {
   bgColor: "#212122",
   textColor: "white",
   accentColor: "#B0B6B7",
-  cardBgColor: "#3D3D3D",
+  cardBgColor: "rgb(61, 61, 61)", // #3D3D3D
   cardShadowColor: "#161618",
   settingBgColor: "rgb(39, 39, 39)",
   checkBoxColor: "#A6B8C4",
-  checkColor: "rgb(60, 60, 60)",
+  checkIconColor: "rgb(61, 61, 61)",
+  whileDraggingColor: "rgb(75, 75, 75)",
 };
 
 export const lightTheme: DefaultTheme = {
@@ -19,5 +20,6 @@ export const lightTheme: DefaultTheme = {
   cardShadowColor: "#bdc3c7",
   settingBgColor: "rgb(226, 230, 230)",
   checkBoxColor: "#3c6382",
-  checkColor: "white",
+  checkIconColor: "white",
+  whileDraggingColor: "rgb(242, 242, 240)",
 };

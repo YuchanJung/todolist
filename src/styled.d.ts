@@ -4,13 +4,14 @@ import 'styled-components';
 // and extend them!
 declare module 'styled-components' {
   export interface DefaultTheme {
-    textColor: stirng;
+    textColor: string;
     bgColor: string;
     accentColor: string;
     cardBgColor: string;
     cardShadowColor: string;
     settingBgColor: string;
-    checkColor: string; // check icon color
+    checkIconColor: string;
     checkBoxColor: string;
+    whileDraggingColor: string;
   }
 }
