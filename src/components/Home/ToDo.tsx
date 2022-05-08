@@ -14,14 +14,17 @@ import CheckIcon from "../icons/CheckIcon";
 import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
 import DragButton from "./DragButton";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ isDragging: boolean }>`
   position: relative;
   display: flex;
+  justify-content: center;
   align-items: center;
-  width: 85%;
-  min-height: 40px;
-  padding: 0px 10px;
+  width: 100%;
+  min-height: 42px;
+  padding: 0px 20px 0px 30px;
   margin: 5px 0px;
+  background-color: ${(props) =>
+    props.isDragging ? props.theme.whileDraggingColor : "none"};
 `;
 
 const CheckBox = styled.div<ICheckedProps>`
@@ -30,7 +33,7 @@ const CheckBox = styled.div<ICheckedProps>`
   border-radius: 10px;
   margin-top: 2px;
   border: 2px solid ${(props) => props.theme.accentColor};
-  color: ${(props) => props.theme.checkColor};
+  color: ${(props) => props.theme.checkIconColor};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,7 +48,7 @@ const CheckBox = styled.div<ICheckedProps>`
 
 const Text = styled.span<ICheckedProps>`
   display: inline-block;
-  width: 180px;
+  width: 200px;
   font-size: 24px;
   transition: 0.2s ease-in;
   margin-left: 14px;
@@ -58,8 +61,6 @@ const Text = styled.span<ICheckedProps>`
 `;
 
 const DragBox = styled.div`
-  position: absolute;
-  right: 30px;
   width: 40px;
   height: 40px;
   min-height: 40px;
@@ -80,8 +81,6 @@ const DeleteButton = styled.button`
 `;
 
 const Ellipsis = styled.div`
-  position: absolute;
-  right: 5px;
   width: 30px;
   height: 30px;
   border-radius: 15px;
@@ -149,8 +148,12 @@ function ToDo({ toDo, index }: IToDoProps) {
   };
   return (
     <Draggable draggableId={id.toString()} index={index}>
-      {(provided) => (
-        <Wrapper ref={provided.innerRef} {...provided.draggableProps}>
+      {(provided, snapshot) => (
+        <Wrapper
+          isDragging={snapshot.isDragging}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+        >
           <CheckBox onClick={onCheck} checked={checked}>
             {checked && <CheckIcon />}
           </CheckBox>
