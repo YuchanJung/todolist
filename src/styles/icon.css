@@ -1,33 +1,33 @@
 .faMoon {
-    color: #f1c40f;
+  color: #f1c40f;
 }
-
 .faSun {
-    color: #f39c12;
+  color: #f39c12;
 }
-
 .prevDate,
 .nextDate {
-    font-size: 20px;
+  font-size: 20px;
 }
-
 .backHome {
-    font-size: 28px;
+  font-size: 28px;
 }
-
 .bars {
-    font-size: 28px;
-    margin-right: 10px;
+  font-size: 28px;
+  margin-right: 10px;
 }
-
 .check {
-    font-size: 14px;
+  font-size: 14px;
 }
-
-.dragUp {}
-
-.dragDown {}
-
+.dragUp {
+}
+.dragDown {
+}
 .ellipsisVertical {
-    font-size: 24px;
+  font-size: 24px;
+}
+.x {
+  font-size: 18px;
+}
+.magnifyingGlass {
+  font-size: 14px;
 }

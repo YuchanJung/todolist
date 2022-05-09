@@ -1,4 +1,5 @@
-import React from "react";
+import { AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { css } from "styled-components";
@@ -12,6 +13,7 @@ import {
 } from "../../atom";
 import CheckIcon from "../icons/CheckIcon";
 import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
+import EllipsisContents from "./EllipsisContents";
 import DragButton from "./DragButton";
 
 const Wrapper = styled.div<{ isDragging: boolean }>`
@@ -70,16 +72,6 @@ interface ICheckedProps {
   checked: boolean;
 }
 
-const DeleteButton = styled.button`
-  position: absolute;
-  right: 10px;
-  width: 65px;
-  height: 30px;
-  border-radius: 15px;
-  background-color: transparent;
-  border: 2px solid ${(props) => props.theme.textColor};
-`;
-
 const Ellipsis = styled.div`
   width: 30px;
   height: 30px;
@@ -94,13 +86,6 @@ interface IToDoProps {
   index: number;
 }
 
-function deletedToDos(oldToDos: IToDo[], targetIndex: number) {
-  return [
-    ...oldToDos.slice(0, targetIndex),
-    ...oldToDos.slice(targetIndex + 1),
-  ];
-}
-
 // for changing checked or categories
 function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
   return [
@@ -111,27 +96,10 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
 }
 
 function ToDo({ toDo, index }: IToDoProps) {
+  const [clickedEllipsis, setClickedEllipsis] = useState(false);
   const { text, id, category, checked, date } = toDo;
   const setAllToDos = useSetRecoilState(allToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
-  const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
-    /* 
-    const {
-      currentTarget: { name },
-    } = event;
-    */
-    setAllToDos((prevAllToDos) => {
-      const oldToDos = prevAllToDos[dateKey].toDos;
-      const targetIndex = oldToDos.findIndex((td) => td.id === id);
-      const newToDos = deletedToDos(oldToDos, targetIndex);
-      const newAllToDos: IAllToDos = {
-        ...prevAllToDos,
-        [dateKey]: { toDos: newToDos },
-      };
-      localStorage.setItem(TODOS_KEY, JSON.stringify(newAllToDos));
-      return newAllToDos;
-    });
-  };
   const onCheck = () => {
     setAllToDos((prevAllToDos) => {
       const oldToDos = prevAllToDos[dateKey].toDos;
@@ -161,12 +129,12 @@ function ToDo({ toDo, index }: IToDoProps) {
           <DragBox {...provided.dragHandleProps}>
             <DragButton />
           </DragBox>
-          <Ellipsis>
+          <Ellipsis onClick={() => setClickedEllipsis((prev) => !prev)}>
             <EllipsisVerticalIcon />
           </Ellipsis>
-          {/*<DeleteButton name="DELETE" onClick={onDelete}>
-            Delete
-          </DeleteButton>*/}
+          <AnimatePresence>
+            {clickedEllipsis && <EllipsisContents id={id} />}
+          </AnimatePresence>
         </Wrapper>
       )}
     </Draggable>
