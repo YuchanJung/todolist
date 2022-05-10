@@ -9,7 +9,7 @@ import {
   isDarkState,
   ISDARK_KEY,
   returnDateKey,
-  showingBarState,
+  isBarsClickedState,
   TODOS_KEY,
 } from "../../atom";
 import BarsIcon from "../icons/BarsIcon";
@@ -47,6 +47,15 @@ const Title = styled.h1`
   margin-left: 15px;
 `;
 
+const BarsButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+`;
+
 const Contents = styled.div`
   width: 100%;
   height: 330px;
@@ -72,7 +81,7 @@ function updateAllToDos(savedAllToDos: string, dateKey: number) {
 function Home() {
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
-  const showingBar = useRecoilValue(showingBarState);
+  const [isBarsClicked, setIsBarsClicked] = useRecoilState(isBarsClickedState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
   const toDosByDate = allToDos[dateKey];
@@ -91,10 +100,16 @@ function Home() {
   */
   // const toDosByCat = useRecoilValue(toDosCatSelector);
   return (
-    <Wrapper custom={showingBar} variants={wrapperVariants} animate="animate">
+    <Wrapper
+      custom={isBarsClicked}
+      variants={wrapperVariants}
+      animate="animate"
+    >
       <Header>
         <Title>{toDosByDate ? toDosByDate.toDos.length : 0} Tasks</Title>
-        <BarsIcon />
+        <BarsButton onClick={() => setIsBarsClicked((prev) => !prev)}>
+          <BarsIcon />
+        </BarsButton>
       </Header>
       {/*<SelectCategory />*/}
       <Contents>

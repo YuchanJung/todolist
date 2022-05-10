@@ -67,6 +67,8 @@ a {
   color: inherit;
 }
 button {
+  border: none;
+  background-color: transparent;
   color: ${(props) => props.theme.textColor}
 }
 `;

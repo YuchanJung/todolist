@@ -26,17 +26,14 @@ const Wrapper = styled.div`
 `;
 
 const ChangeDateButton = styled.button`
-  border: none;
-  background-color: transparent;
+  position: absolute;
 `;
 
 const PrevButton = styled(ChangeDateButton)`
-  position: absolute;
   left: 5px;
 `;
 
 const NextButton = styled(ChangeDateButton)`
-  position: absolute;
   right: 5px;
 `;
 
