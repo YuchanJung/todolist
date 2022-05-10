@@ -70,7 +70,6 @@ function ToDoList() {
       return newAllToDos;
     });
   };
-  console.log(isBack);
   return (
     <AnimatePresence custom={isBack}>
       <Wrapper
