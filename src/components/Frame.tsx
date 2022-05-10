@@ -1,7 +1,7 @@
 import { motion, Variants } from "framer-motion";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { showingBarState } from "../atom";
+import { isBarsClickedState, isEllipsisClickedState } from "../atom";
 import Home from "./Home/Home";
 import Setting from "./Setting/Setting";
 
@@ -42,7 +42,14 @@ const pagesVariants: Variants = {
   }),
 };
 
-const Overlay = styled(motion.div)`
+const ContainerOverlay = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  opacity: 0;
+`;
+
+const HomeOverlay = styled(motion.div)`
   width: 380px;
   min-width: 380px;
   height: 500px;
@@ -51,7 +58,7 @@ const Overlay = styled(motion.div)`
   position: absolute;
 `;
 
-const overlayVariants: Variants = {
+const homeOverlayVariants: Variants = {
   initial: {
     opacity: 0,
   },
@@ -64,16 +71,19 @@ const overlayVariants: Variants = {
 };
 
 function Frame() {
-  const [showingBar, setShowingBar] = useRecoilState(showingBarState);
+  const [isBarsClicked, setIsBarsClicked] = useRecoilState(isBarsClickedState);
+  const [isEllipsisClicked, setIsEllipsisClicked] = useRecoilState(
+    isEllipsisClickedState
+  );
   return (
     <Container>
       <MainBox>
-        <Pages custom={showingBar} variants={pagesVariants} animate="animate">
+        <Pages custom={isBarsClicked} variants={pagesVariants} animate="animate">
           <Home />
-          {showingBar && (
-            <Overlay
-              onClick={() => setShowingBar((prev) => !prev)}
-              variants={overlayVariants}
+          {isBarsClicked && (
+            <HomeOverlay
+              onClick={() => setIsBarsClicked((prev) => !prev)}
+              variants={homeOverlayVariants}
               initial="initial"
               animate="animate"
             />
@@ -81,6 +91,9 @@ function Frame() {
           <Setting />
         </Pages>
       </MainBox>
+      {isEllipsisClicked && (
+        <ContainerOverlay onClick={() => setIsEllipsisClicked(false)} />
+      )}
     </Container>
   );
 }

@@ -1,7 +1,7 @@
 import { AnimatePresence } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { css } from "styled-components";
 import {
   allToDosState,
@@ -9,15 +9,16 @@ import {
   IAllToDos,
   IToDo,
   returnDateKey,
+  isEllipsisClickedState,
   TODOS_KEY,
 } from "../../atom";
 import CheckIcon from "../icons/CheckIcon";
 import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
-import EllipsisContents from "./EllipsisContents";
+import EllipsisBox from "./EllipsisContents";
 import DragButton from "./DragButton";
 
 const Wrapper = styled.div<{ isDragging: boolean }>`
-  position: relative;
+  position: relative; // for EllipsisContents
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +97,10 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
 }
 
 function ToDo({ toDo, index }: IToDoProps) {
-  const [clickedEllipsis, setClickedEllipsis] = useState(false);
+  const [clickedThisEllipsis, setClickedThisEllipsis] = useState(false);
+  const [isEllipsisClicked, setIsEllipsisClicked] = useRecoilState(
+    isEllipsisClickedState
+  );
   const { text, id, category, checked, date } = toDo;
   const setAllToDos = useSetRecoilState(allToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
@@ -114,6 +118,9 @@ function ToDo({ toDo, index }: IToDoProps) {
       return newAllToDos;
     });
   };
+  useEffect(() => {
+    if (!isEllipsisClicked) setClickedThisEllipsis(false);
+  }, [isEllipsisClicked]);
   return (
     <Draggable draggableId={id.toString()} index={index}>
       {(provided, snapshot) => (
@@ -129,11 +136,16 @@ function ToDo({ toDo, index }: IToDoProps) {
           <DragBox {...provided.dragHandleProps}>
             <DragButton />
           </DragBox>
-          <Ellipsis onClick={() => setClickedEllipsis((prev) => !prev)}>
+          <Ellipsis
+            onClick={() => {
+              setClickedThisEllipsis((prev) => !prev);
+              setIsEllipsisClicked((prev) => !prev);
+            }}
+          >
             <EllipsisVerticalIcon />
           </Ellipsis>
           <AnimatePresence>
-            {clickedEllipsis && <EllipsisContents id={id} />}
+            {clickedThisEllipsis && <EllipsisBox id={id} />}
           </AnimatePresence>
         </Wrapper>
       )}
