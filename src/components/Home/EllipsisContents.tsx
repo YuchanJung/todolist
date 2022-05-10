@@ -30,8 +30,8 @@ const Box = styled(motion.div)`
 
 const boxVariants: Variants = {
   initial: {
-    x: 15,
-    y: -15,
+    x: 10,
+    y: -10,
     scale: 0.8,
     opacity: 0,
   },
@@ -42,8 +42,8 @@ const boxVariants: Variants = {
     opacity: 1,
   },
   exit: {
-    x: 15,
-    y: -15,
+    x: 10,
+    y: -10,
     scale: 0.8,
     opacity: 0,
   },
@@ -65,8 +65,6 @@ const Span = styled.span`
 const DeleteButton = styled.button`
   width: 20px;
   height: 25px;
-  border: 0px solid transparent;
-  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,7 +105,7 @@ function EllipsisContents({ id }: IEllipsisContents) {
       initial="initial"
       animate="animate"
       exit="exit"
-      transition={{ type: "tween", duration: 0.2 }}
+      transition={{ type: "tween", duration: 0.1 }}
     >
       <Div>
         <DeleteButton onClick={onDelete}>
