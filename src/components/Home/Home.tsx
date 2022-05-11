@@ -21,7 +21,7 @@ const Wrapper = styled(motion.div)`
   width: 380px;
   min-width: 380px;
   height: 500px;
-  background-color: ${(props) => props.theme.homeBgColor};
+  background-color: ${(props) => props.theme.background.home};
 `;
 
 const wrapperVariants: Variants = {

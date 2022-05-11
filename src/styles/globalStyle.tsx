@@ -55,8 +55,8 @@ table {
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background-color: ${(props) => props.theme.bgColor};
-  color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.background.basic};
+  color: ${(props) => props.theme.text.basic};
   transition: 0.2s ease-in;
 }
 h1 {
@@ -69,7 +69,7 @@ a {
 button {
   border: none;
   background-color: transparent;
-  color: ${(props) => props.theme.textColor}
+  color: ${(props) => props.theme.text.basic}
 }
 `;
 

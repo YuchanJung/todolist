@@ -16,7 +16,7 @@ const Box = styled(motion.div)`
   position: absolute;
   right: 42px;
   top: 35px;
-  background-color: ${(props) => props.theme.ellipsisContentsBgColor};
+  background-color: ${(props) => props.theme.background.ellpsisContents};
   box-shadow: rgba(15, 15, 18, 0.25) 0px 4px 8px -2px,
     rgba(15, 15, 18, 0.08) 0px 0px 0px 1px;
   width: 150px;

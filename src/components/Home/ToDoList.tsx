@@ -31,7 +31,7 @@ const ToDoBoard = styled.div`
     background-color: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.text.basic};
     border-radius: 10px;
   }
 `;

@@ -23,7 +23,7 @@ const MainBox = styled.div<{ isDark: boolean }>`
   width: 380px;
   height: 500px;
   border-radius: 35px;
-  background-color: ${(props) => props.theme.homeBgColor};
+  background-color: ${(props) => props.theme.background.home};
   overflow: hidden;
   ${(props) =>
     props.isDark
@@ -41,7 +41,7 @@ const Pages = styled(motion.div)`
   // Home + Setting
   width: 680px;
   height: 500px;
-  background-color: ${(props) => props.theme.settingBgColor};
+  background-color: ${(props) => props.theme.background.setting};
   display: flex;
 `;
 
@@ -67,7 +67,7 @@ const HomeOverlay = styled(motion.div)`
   min-width: 380px;
   height: 500px;
   border-radius: 35px;
-  background-color: ${(props) => props.theme.homeBgColor};
+  background-color: ${(props) => props.theme.background.home};
   position: absolute;
 `;
 

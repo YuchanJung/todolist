@@ -34,7 +34,7 @@ const Input = styled.input`
   font-size: 15px;
   background-color: transparent;
   border-width: 0 0 2px;
-  border-color: ${(props) => props.theme.textColor};
+  border-color: ${(props) => props.theme.text.basic};
   margin: 0px 8px 0px 12px;
   :focus {
     outline: none;
@@ -47,7 +47,7 @@ const Button = styled.button`
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  border: 2px solid ${(props) => props.theme.textColor};
+  border: 2px solid ${(props) => props.theme.text.basic};
   background-color: transparent;
   margin-right: 8px;
 
@@ -70,7 +70,7 @@ const Button = styled.button`
   &:before {
     content: "";
     position: absolute;
-    background: ${(props) => props.theme.textColor};
+    background: ${(props) => props.theme.text.basic};
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;

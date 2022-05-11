@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   width: 300px;
   min-width: 300px;
   height: 500px;
-  background-color: ${(props) => props.theme.settingBgColor};
+  background-color: ${(props) => props.theme.background.setting};
 `;
 
 const Header = styled.header`

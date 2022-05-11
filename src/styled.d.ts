@@ -4,14 +4,20 @@ import 'styled-components';
 // and extend them!
 declare module 'styled-components' {
   export interface DefaultTheme {
-    textColor: string;
-    bgColor: string;
-    accentColor: string;
-    homeBgColor: string;
-    settingBgColor: string;
-    ellipsisContentsBgColor: string;
-    frameShadowColor: string;
-    checkBoxColor: string;
-    whileDraggingColor: string;
+    background: {
+      basic: string;
+      home: string;
+      setting: string;
+      toDoWhileDragging: string;
+      checkBox: string;
+      ellpsisContents: string;
+    };
+    text: {
+      basic: string;
+      accent: string;
+    };
+    shadow: {
+      frame: string;
+    };
   }
 }

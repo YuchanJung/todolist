@@ -14,7 +14,7 @@ const Input = styled.input`
 
 const Label = styled.label`
   position: relative;
-  background-color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.text.basic};
   transition: 0.2s ease-in;
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@ const ToggleBall = styled.div`
   position: absolute;
   top: 2px;
   right: 2px;
-  background-color: ${(props) => props.theme.settingBgColor};
+  background-color: ${(props) => props.theme.background.setting};
   width: 22px;
   height: 22px;
   border-radius: 50%;

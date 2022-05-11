@@ -27,7 +27,7 @@ const Wrapper = styled.div<{ isDragging: boolean }>`
   padding: 0px 20px 0px 30px;
   margin: 5px 0px;
   background-color: ${(props) =>
-    props.isDragging ? props.theme.whileDraggingColor : "none"};
+    props.isDragging ? props.theme.background.toDoWhileDragging : "none"};
 `;
 
 const CheckBox = styled.div<ICheckedProps>`
@@ -35,8 +35,8 @@ const CheckBox = styled.div<ICheckedProps>`
   height: 20px;
   border-radius: 10px;
   margin-top: 2px;
-  border: 2px solid ${(props) => props.theme.accentColor};
-  color: ${(props) => props.theme.homeBgColor};
+  border: 2px solid ${(props) => props.theme.text.accent};
+  color: ${(props) => props.theme.background.home};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,7 +45,7 @@ const CheckBox = styled.div<ICheckedProps>`
     props.checked &&
     css`
       border: 0px;
-      background-color: ${(props) => props.theme.checkBoxColor};
+      background-color: ${(props) => props.theme.background.checkBox};
     `}
 `;
 
@@ -58,7 +58,7 @@ const Text = styled.span<ICheckedProps>`
   ${(props) =>
     props.checked &&
     css`
-      color: ${(props) => props.theme.accentColor};
+      color: ${(props) => props.theme.text.accent};
       text-decoration: line-through;
     `}
 `;
