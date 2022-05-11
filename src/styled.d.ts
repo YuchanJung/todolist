@@ -8,8 +8,9 @@ declare module 'styled-components' {
     bgColor: string;
     accentColor: string;
     homeBgColor: string;
-    frameShadowColor: string;
     settingBgColor: string;
+    ellipsisContentsBgColor: string;
+    frameShadowColor: string;
     checkBoxColor: string;
     whileDraggingColor: string;
   }

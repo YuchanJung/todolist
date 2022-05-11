@@ -16,9 +16,10 @@ const Box = styled(motion.div)`
   position: absolute;
   right: 42px;
   top: 35px;
-  background-color: ${(props) => props.theme.bgColor};
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-  width: 140px;
+  background-color: ${(props) => props.theme.ellipsisContentsBgColor};
+  box-shadow: rgba(15, 15, 18, 0.25) 0px 4px 8px -2px,
+    rgba(15, 15, 18, 0.08) 0px 0px 0px 1px;
+  width: 150px;
   height: 60px;
   min-height: 60px;
   border-radius: 5px;

@@ -1,7 +1,11 @@
 import { motion, Variants } from "framer-motion";
-import { useRecoilState } from "recoil";
-import styled from "styled-components";
-import { isBarsClickedState, isEllipsisClickedState } from "../atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import styled, { css } from "styled-components";
+import {
+  isBarsClickedState,
+  isDarkState,
+  isEllipsisClickedState,
+} from "../atom";
 import Home from "./Home/Home";
 import Setting from "./Setting/Setting";
 
@@ -15,13 +19,22 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const MainBox = styled.div`
+const MainBox = styled.div<{ isDark: boolean }>`
   width: 380px;
   height: 500px;
   border-radius: 35px;
-  box-shadow: -2px 4px 20px 6px ${(props) => props.theme.frameShadowColor};
   background-color: ${(props) => props.theme.homeBgColor};
   overflow: hidden;
+  ${(props) =>
+    props.isDark
+      ? css`
+          box-shadow: rgba(0, 0, 0, 0.56) 0px 15px 40px 4px;
+        `
+      : css`
+          box-shadow: rgba(7, 5, 5, 0.2) 0px 12px 28px 0px,
+            rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+            rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+        `}
 `;
 
 const Pages = styled(motion.div)`
@@ -71,14 +84,19 @@ const homeOverlayVariants: Variants = {
 };
 
 function Frame() {
+  const isDark = useRecoilValue(isDarkState);
   const [isBarsClicked, setIsBarsClicked] = useRecoilState(isBarsClickedState);
   const [isEllipsisClicked, setIsEllipsisClicked] = useRecoilState(
     isEllipsisClickedState
   );
   return (
     <Container>
-      <MainBox>
-        <Pages custom={isBarsClicked} variants={pagesVariants} animate="animate">
+      <MainBox isDark={isDark}>
+        <Pages
+          custom={isBarsClicked}
+          variants={pagesVariants}
+          animate="animate"
+        >
           <Home />
           {isBarsClicked && (
             <HomeOverlay
