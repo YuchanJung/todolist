@@ -101,14 +101,14 @@ function ToDo({ toDo, index }: IToDoProps) {
   const [isEllipsisClicked, setIsEllipsisClicked] = useRecoilState(
     isEllipsisClickedState
   );
-  const { text, id, category, checked, date } = toDo;
+  const { task, id, category, checked, date } = toDo;
   const setAllToDos = useSetRecoilState(allToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
   const onCheck = () => {
     setAllToDos((prevAllToDos) => {
       const oldToDos = prevAllToDos[dateKey].toDos;
       const targetIndex = oldToDos.findIndex((td) => td.id === id);
-      const newToDo = { text, id, category, checked: !checked, date };
+      const newToDo = { task, id, category, checked: !checked, date };
       const newToDos = addedToDos(oldToDos, newToDo, targetIndex);
       const newAllToDos: IAllToDos = {
         ...prevAllToDos,
@@ -132,7 +132,7 @@ function ToDo({ toDo, index }: IToDoProps) {
           <CheckBox onClick={onCheck} checked={checked}>
             {checked && <CheckIcon />}
           </CheckBox>
-          <Text checked={checked}>{text}</Text>
+          <Text checked={checked}>{task.title}</Text>
           <DragBox {...provided.dragHandleProps}>
             <DragButton />
           </DragBox>

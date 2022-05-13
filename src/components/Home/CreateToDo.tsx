@@ -6,6 +6,7 @@ import {
   categoryState,
   dateState,
   IAllToDos,
+  IToDo,
   returnDateKey,
   TODOS_KEY,
 } from "../../atom";
@@ -95,9 +96,18 @@ function CreateToDo() {
   const onValid = ({ toDo }: IForm) => {
     setAllToDos((prevAllToDos) => {
       const oldToDos = prevAllToDos[dateKey].toDos;
-      const newToDos = [
+      const newToDos: IToDo[] = [
         ...oldToDos,
-        { text: toDo, id: Date.now(), category, checked: false, date },
+        {
+          task: {
+            title: toDo,
+            details: toDo,
+          },
+          id: Date.now(),
+          category,
+          checked: false,
+          date,
+        },
       ];
       const newAllToDos: IAllToDos = {
         ...prevAllToDos,

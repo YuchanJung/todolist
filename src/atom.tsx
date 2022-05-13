@@ -16,7 +16,10 @@ export interface IDate {
 }
 
 export interface IToDo {
-  text: string;
+  task: {
+    title: string;
+    details: string;
+  }
   id: number;
   category: Categories;
   checked: boolean;
