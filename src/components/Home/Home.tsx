@@ -1,6 +1,6 @@
 import { motion, Variants } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
   allToDosState,
@@ -76,7 +76,6 @@ const CreateButton = styled(motion.button)`
   font-size: 16px;
 `;
 
-
 function updateAllToDos(savedAllToDos: string, dateKey: number) {
   const tempAllToDos: IAllToDos = { ...JSON.parse(savedAllToDos) };
   if (!tempAllToDos[dateKey]) {
@@ -91,7 +90,7 @@ function updateAllToDos(savedAllToDos: string, dateKey: number) {
 }
 
 function Home() {
-  const [isCreateButtonClicked, setIsCreateButtonClicked] = useRecoilState(
+  const setIsCreateButtonClicked = useSetRecoilState(
     isCreateButtonClickedState
   );
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
@@ -132,9 +131,7 @@ function Home() {
         <SelectDate />
         <CreateToDo />
         {toDosByDate && <ToDoList />}
-        <CreateButton onClick={toggleClicked} layoutId="create">
-          New Task
-        </CreateButton>
+        <CreateButton onClick={toggleClicked}>New Task</CreateButton>
       </Contents>
     </Wrapper>
   );

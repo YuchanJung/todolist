@@ -3,7 +3,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { css } from "styled-components";
 import {
   isBarsClickedState,
-  isCreateButtonClickedState,
   isDarkState,
   isEllipsisClickedState,
 } from "../atom";
@@ -91,7 +90,6 @@ function Frame() {
   const [isEllipsisClicked, setIsEllipsisClicked] = useRecoilState(
     isEllipsisClickedState
   );
-  const isCreateButtonClicked = useRecoilValue(isCreateButtonClickedState);
   return (
     <Container>
       <MainBox isDark={isDark}>
@@ -115,7 +113,7 @@ function Frame() {
       {isEllipsisClicked && (
         <ContainerOverlay onClick={() => setIsEllipsisClicked(false)} />
       )}
-      {isCreateButtonClicked && <CreateToDo />}
+      <CreateToDo />
     </Container>
   );
 }
