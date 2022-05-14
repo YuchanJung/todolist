@@ -11,7 +11,7 @@ import {
   returnDateKey,
   TODOS_KEY,
 } from "../../atom";
-import ArrowIcon from "../icons/ArrowIcon";
+import ArrowIcon from "../Icons/ArrowIcon";
 
 const PREV = "left";
 const NEXT = "right";

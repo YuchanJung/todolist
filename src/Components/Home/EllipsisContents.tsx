@@ -9,8 +9,8 @@ import {
   returnDateKey,
   TODOS_KEY,
 } from "../../atom";
-import MagnifyingGlassIcon from "../icons/MagnifyingGlassIcon";
-import XIcon from "../icons/XIcon";
+import MagnifyingGlassIcon from "../Icons/MagnifyingGlassIcon";
+import XIcon from "../Icons/XIcon";
 
 const Box = styled(motion.div)`
   position: absolute;

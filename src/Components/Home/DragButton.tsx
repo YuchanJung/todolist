@@ -1,6 +1,6 @@
 import { motion, Variants } from "framer-motion";
 import styled from "styled-components";
-import ArrowIcon from "../icons/ArrowIcon";
+import ArrowIcon from "../Icons/ArrowIcon";
 
 const Wrapper = styled(motion.div)`
   width: 40px;

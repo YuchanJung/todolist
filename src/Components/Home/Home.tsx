@@ -13,7 +13,7 @@ import {
   TODOS_KEY,
   isCreateButtonClickedState,
 } from "../../atom";
-import BarsIcon from "../icons/BarsIcon";
+import BarsIcon from "../Icons/BarsIcon";
 import CreateToDo from "./CreateToDo";
 import SelectDate from "./SelectDate";
 import ToDoList from "./ToDoList";

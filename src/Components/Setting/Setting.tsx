@@ -1,7 +1,7 @@
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { isBarsClickedState } from "../../atom";
-import ArrowIcon from "../icons/ArrowIcon";
+import ArrowIcon from "../Icons/ArrowIcon";
 import DarkModeButton from "./DarkModeButton";
 
 const PREV = "left";

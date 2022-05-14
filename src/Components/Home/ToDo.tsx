@@ -12,8 +12,8 @@ import {
   isEllipsisClickedState,
   TODOS_KEY,
 } from "../../atom";
-import CheckIcon from "../icons/CheckIcon";
-import EllipsisVerticalIcon from "../icons/EllipsisVerticalIcon";
+import CheckIcon from "../Icons/CheckIcon";
+import EllipsisVerticalIcon from "../Icons/EllipsisVerticalIcon";
 import EllipsisBox from "./EllipsisContents";
 import DragButton from "./DragButton";
 
