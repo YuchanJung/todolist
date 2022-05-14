@@ -62,7 +62,7 @@ export const dateState = atom<IDate>({
 });
 
 export const isEllipsisClickedState = atom({
-  key: "isellipsisClicked",
+  key: "isElipsisClicked",
   default: false,
 });
 
@@ -70,6 +70,12 @@ export const isBarsClickedState = atom({
   key: "isBarsClicked",
   default: false,
 });
+
+export const isCreateButtonClickedState = atom({
+  key: "isCreateButtonClicked",
+  default: false,
+});
+
 
 export const isBackState = atom({
   key: "isBackState",

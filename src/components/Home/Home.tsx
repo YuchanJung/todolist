@@ -1,5 +1,5 @@
 import { motion, Variants } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import {
@@ -11,6 +11,7 @@ import {
   returnDateKey,
   isBarsClickedState,
   TODOS_KEY,
+  isCreateButtonClickedState,
 } from "../../atom";
 import BarsIcon from "../icons/BarsIcon";
 import CreateToDo from "./CreateToDo";
@@ -65,6 +66,17 @@ const Contents = styled.div`
   position: relative;
 `;
 
+const CreateButton = styled(motion.button)`
+  position: absolute;
+  bottom: -30px;
+  width: 120px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: ${(props) => props.theme.background.checkBox};
+  font-size: 16px;
+`;
+
+
 function updateAllToDos(savedAllToDos: string, dateKey: number) {
   const tempAllToDos: IAllToDos = { ...JSON.parse(savedAllToDos) };
   if (!tempAllToDos[dateKey]) {
@@ -79,12 +91,16 @@ function updateAllToDos(savedAllToDos: string, dateKey: number) {
 }
 
 function Home() {
+  const [isCreateButtonClicked, setIsCreateButtonClicked] = useRecoilState(
+    isCreateButtonClickedState
+  );
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
   const [isBarsClicked, setIsBarsClicked] = useRecoilState(isBarsClickedState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
   const toDosByDate = allToDos[dateKey];
+  const toggleClicked = () => setIsCreateButtonClicked((prev) => !prev);
   useEffect(() => {
     // first rendering
     const savedAllToDos = localStorage.getItem(TODOS_KEY);
@@ -116,6 +132,9 @@ function Home() {
         <SelectDate />
         <CreateToDo />
         {toDosByDate && <ToDoList />}
+        <CreateButton onClick={toggleClicked} layoutId="create">
+          New Task
+        </CreateButton>
       </Contents>
     </Wrapper>
   );

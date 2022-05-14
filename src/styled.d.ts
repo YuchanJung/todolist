@@ -8,6 +8,7 @@ declare module 'styled-components' {
       basic: string;
       home: string;
       setting: string;
+      createToDo: string;
       toDoWhileDragging: string;
       checkBox: string;
       ellpsisContents: string;
