@@ -2,9 +2,9 @@ import { motion, Variants } from "framer-motion";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled, { css } from "styled-components";
 import {
-  isBarsClickedState,
   isDarkState,
-  isEllipsisClickedState,
+  showingSettingPageState,
+  showingEllipsisModalState,
 } from "../atom";
 import CreateToDo from "./Create/CreateToDo";
 import Home from "./Home/Home";
@@ -86,22 +86,26 @@ const homeOverlayVariants: Variants = {
 
 function Frame() {
   const isDark = useRecoilValue(isDarkState);
-  const [isBarsClicked, setIsBarsClicked] = useRecoilState(isBarsClickedState);
-  const [isEllipsisClicked, setIsEllipsisClicked] = useRecoilState(
-    isEllipsisClickedState
+  const [showingSettingPage, setShowingSettingPage] = useRecoilState(
+    showingSettingPageState
   );
+  const [showingEllipsisModal, setShowingEllipsisModal] = useRecoilState(
+    showingEllipsisModalState
+  );
+  const toggleSettingPage = () => setShowingSettingPage((prev) => !prev);
+  const toggleEllipsisModal = () => setShowingEllipsisModal((prev) => !prev);
   return (
     <Container>
       <MainBox isDark={isDark}>
         <Pages
-          custom={isBarsClicked}
+          custom={showingSettingPage}
           variants={pagesVariants}
           animate="animate"
         >
           <Home />
-          {isBarsClicked && (
+          {showingSettingPage && (
             <HomeOverlay
-              onClick={() => setIsBarsClicked((prev) => !prev)}
+              onClick={toggleSettingPage}
               variants={homeOverlayVariants}
               initial="initial"
               animate="animate"
@@ -110,8 +114,8 @@ function Frame() {
           <Setting />
         </Pages>
       </MainBox>
-      {isEllipsisClicked && (
-        <ContainerOverlay onClick={() => setIsEllipsisClicked(false)} />
+      {showingEllipsisModal && (
+        <ContainerOverlay onClick={toggleEllipsisModal} />
       )}
       <CreateToDo />
     </Container>

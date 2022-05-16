@@ -9,12 +9,12 @@ import {
   IAllToDos,
   IToDo,
   returnDateKey,
-  isEllipsisClickedState,
+  showingEllipsisModalState,
   TODOS_KEY,
 } from "../../atom";
 import CheckIcon from "../Icons/CheckIcon";
 import EllipsisVerticalIcon from "../Icons/EllipsisVerticalIcon";
-import EllipsisBox from "./EllipsisContents";
+import EllipsisContents from "./EllipsisContents";
 import DragButton from "./DragButton";
 
 const Wrapper = styled.div<{ isDragging: boolean }>`
@@ -98,8 +98,8 @@ function addedToDos(oldToDos: IToDo[], newToDo: IToDo, targetIndex: number) {
 
 function ToDo({ toDo, index }: IToDoProps) {
   const [clickedThisEllipsis, setClickedThisEllipsis] = useState(false);
-  const [isEllipsisClicked, setIsEllipsisClicked] = useRecoilState(
-    isEllipsisClickedState
+  const [showingEllipsisModal, setShowingEllipsisModal] = useRecoilState(
+    showingEllipsisModalState
   );
   const { task, id, category, checked, date } = toDo;
   const setAllToDos = useSetRecoilState(allToDosState);
@@ -119,8 +119,8 @@ function ToDo({ toDo, index }: IToDoProps) {
     });
   };
   useEffect(() => {
-    if (!isEllipsisClicked) setClickedThisEllipsis(false);
-  }, [isEllipsisClicked]);
+    if (!showingEllipsisModal) setClickedThisEllipsis(false);
+  }, [showingEllipsisModal]);
   return (
     <Draggable draggableId={id.toString()} index={index}>
       {(provided, snapshot) => (
@@ -139,13 +139,13 @@ function ToDo({ toDo, index }: IToDoProps) {
           <Ellipsis
             onClick={() => {
               setClickedThisEllipsis((prev) => !prev);
-              setIsEllipsisClicked((prev) => !prev);
+              setShowingEllipsisModal((prev) => !prev);
             }}
           >
             <EllipsisVerticalIcon />
           </Ellipsis>
           <AnimatePresence>
-            {clickedThisEllipsis && <EllipsisBox id={id} />}
+            {clickedThisEllipsis && <EllipsisContents id={id} />}
           </AnimatePresence>
         </Wrapper>
       )}

@@ -2,7 +2,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { isCreateButtonClickedState } from "../../atom";
+import { showingCreatePageState } from "../../atom";
 
 const Wrapper = styled(motion.div)`
   position: absolute;
@@ -15,20 +15,20 @@ const Wrapper = styled(motion.div)`
 `;
 
 function CreateToDo() {
-  const [isCreateButtonClicked, setIsCreateButtonClicked] = useRecoilState(
-    isCreateButtonClickedState
+  const [showingCreatePage, setShowingCreatePage] = useRecoilState(
+    showingCreatePageState
   );
   const pageAnimation = useAnimation();
   const toggleClicked = () => {
-    setIsCreateButtonClicked((prev) => !prev);
+    setShowingCreatePage((prev) => !prev);
   };
   useEffect(() => {
-    if (isCreateButtonClicked) {
+    if (showingCreatePage) {
       pageAnimation.start({ scaleY: 1 });
     } else {
       pageAnimation.start({ scaleY: 0 });
     }
-  }, [isCreateButtonClicked]);
+  }, [showingCreatePage]);
   return (
     <Wrapper
       initial={{ scaleY: 0 }}

@@ -61,18 +61,18 @@ export const dateState = atom<IDate>({
   // for debugging => new Date(new Date().setDate(new Date().getDate() + 1)) & need to change allToDoState
 });
 
-export const isEllipsisClickedState = atom({
-  key: "isElipsisClicked",
+export const showingEllipsisModalState = atom({
+  key: "showingEllipsisModal",
   default: false,
 });
 
-export const isBarsClickedState = atom({
-  key: "isBarsClicked",
+export const showingSettingPageState = atom({
+  key: "showingSettingPage",
   default: false,
 });
 
-export const isCreateButtonClickedState = atom({
-  key: "isCreateButtonClicked",
+export const showingCreatePageState = atom({
+  key: "showingCreatePage",
   default: false,
 });
 

@@ -9,9 +9,10 @@ import {
   isDarkState,
   ISDARK_KEY,
   returnDateKey,
-  isBarsClickedState,
+  showingSettingPageState,
+  showingCreatePageState,
   TODOS_KEY,
-  isCreateButtonClickedState,
+  showingEllipsisModalState,
 } from "../../atom";
 import BarsIcon from "../Icons/BarsIcon";
 import CreateToDo from "./CreateToDo";
@@ -90,16 +91,17 @@ function updateAllToDos(savedAllToDos: string, dateKey: number) {
 }
 
 function Home() {
-  const setIsCreateButtonClicked = useSetRecoilState(
-    isCreateButtonClickedState
-  );
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
-  const [isBarsClicked, setIsBarsClicked] = useRecoilState(isBarsClickedState);
+  const setShowingCreatePage = useSetRecoilState(showingCreatePageState);
+  const [showingEllipsisModal, setShowingEllipsisModal] = useRecoilState(
+    showingEllipsisModalState
+  );
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
   const toDosByDate = allToDos[dateKey];
-  const toggleClicked = () => setIsCreateButtonClicked((prev) => !prev);
+  const toggleCreatePage = () => setShowingCreatePage((prev) => !prev);
+  const toggleEllipsisModal = () => setShowingEllipsisModal((prev) => !prev);
   useEffect(() => {
     // first rendering
     const savedAllToDos = localStorage.getItem(TODOS_KEY);
@@ -116,13 +118,13 @@ function Home() {
   // const toDosByCat = useRecoilValue(toDosCatSelector);
   return (
     <Wrapper
-      custom={isBarsClicked}
+      custom={showingEllipsisModal}
       variants={wrapperVariants}
       animate="animate"
     >
       <Header>
         <Title>{toDosByDate ? toDosByDate.toDos.length : 0} Tasks</Title>
-        <BarsButton onClick={() => setIsBarsClicked((prev) => !prev)}>
+        <BarsButton onClick={toggleEllipsisModal}>
           <BarsIcon />
         </BarsButton>
       </Header>
@@ -131,7 +133,7 @@ function Home() {
         <SelectDate />
         <CreateToDo />
         {toDosByDate && <ToDoList />}
-        <CreateButton onClick={toggleClicked}>New Task</CreateButton>
+        <CreateButton onClick={toggleCreatePage}>New Task</CreateButton>
       </Contents>
     </Wrapper>
   );

@@ -1,6 +1,6 @@
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { isBarsClickedState } from "../../atom";
+import { showingSettingPageState } from "../../atom";
 import ArrowIcon from "../Icons/ArrowIcon";
 import DarkModeButton from "./DarkModeButton";
 
@@ -45,11 +45,12 @@ const SettingDarkMode = styled.div`
 const PrevButton = styled.button``;
 
 function Setting() {
-  const setIsBarsClicked = useSetRecoilState(isBarsClickedState);
+  const setShowingSettingPage = useSetRecoilState(showingSettingPageState);
+  const toggleSettingPage = () => setShowingSettingPage((prev) => !prev);
   return (
     <Wrapper>
       <Header>
-        <PrevButton onClick={() => setIsBarsClicked((prev) => !prev)}>
+        <PrevButton onClick={toggleSettingPage}>
           <ArrowIcon direction={PREV} className="backHome" />
         </PrevButton>
         <Title>Setting</Title>
