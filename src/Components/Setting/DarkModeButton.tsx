@@ -39,7 +39,7 @@ const ToggleBall = styled.div`
 
 function DarkModeButton() {
   const [isDark, setIsDark] = useRecoilState(isDarkState);
-  const onChange = () => {
+  const toggleDarkState = () => {
     setIsDark((prev) => {
       localStorage.setItem(ISDARK_KEY, JSON.stringify(!prev));
       return !prev;
@@ -50,7 +50,7 @@ function DarkModeButton() {
       <Input
         type="checkbox"
         checked={isDark}
-        onChange={onChange}
+        onChange={toggleDarkState}
         id="checkbox"
       />
       <Label htmlFor="checkbox">

@@ -12,7 +12,6 @@ import {
   showingSettingPageState,
   showingCreatePageState,
   TODOS_KEY,
-  showingEllipsisModalState,
 } from "../../atom";
 import BarsIcon from "../Icons/BarsIcon";
 import CreateToDo from "./CreateToDo";
@@ -49,7 +48,7 @@ const Title = styled.h1`
   margin-left: 15px;
 `;
 
-const BarsButton = styled.button`
+const SettingButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,14 +93,14 @@ function Home() {
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
   const setShowingCreatePage = useSetRecoilState(showingCreatePageState);
-  const [showingEllipsisModal, setShowingEllipsisModal] = useRecoilState(
-    showingEllipsisModalState
+  const [showingSettingPage, setShowingSettingPage] = useRecoilState(
+    showingSettingPageState
   );
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
   const toDosByDate = allToDos[dateKey];
   const toggleCreatePage = () => setShowingCreatePage((prev) => !prev);
-  const toggleEllipsisModal = () => setShowingEllipsisModal((prev) => !prev);
+  const toggleEllipsisModal = () => setShowingSettingPage((prev) => !prev);
   useEffect(() => {
     // first rendering
     const savedAllToDos = localStorage.getItem(TODOS_KEY);
@@ -118,15 +117,15 @@ function Home() {
   // const toDosByCat = useRecoilValue(toDosCatSelector);
   return (
     <Wrapper
-      custom={showingEllipsisModal}
+      custom={showingSettingPage}
       variants={wrapperVariants}
       animate="animate"
     >
       <Header>
         <Title>{toDosByDate ? toDosByDate.toDos.length : 0} Tasks</Title>
-        <BarsButton onClick={toggleEllipsisModal}>
+        <SettingButton onClick={toggleEllipsisModal}>
           <BarsIcon />
-        </BarsButton>
+        </SettingButton>
       </Header>
       {/*<SelectCategory />*/}
       <Contents>

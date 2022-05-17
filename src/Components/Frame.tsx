@@ -1,13 +1,13 @@
 import { motion, Variants } from "framer-motion";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled, { css } from "styled-components";
 import {
   isDarkState,
   showingSettingPageState,
-  showingEllipsisModalState,
 } from "../atom";
 import CreateToDo from "./Create/CreateToDo";
 import Home from "./Home/Home";
+import Overlay from "./Home/Overlay";
 import Setting from "./Setting/Setting";
 
 const Container = styled.div`
@@ -56,44 +56,9 @@ const pagesVariants: Variants = {
   }),
 };
 
-const ContainerOverlay = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  opacity: 0;
-`;
-
-const HomeOverlay = styled(motion.div)`
-  width: 380px;
-  min-width: 380px;
-  height: 500px;
-  border-radius: 35px;
-  background-color: ${(props) => props.theme.background.home};
-  position: absolute;
-`;
-
-const homeOverlayVariants: Variants = {
-  initial: {
-    opacity: 0,
-  },
-  animate: {
-    opacity: 0.6,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
 function Frame() {
   const isDark = useRecoilValue(isDarkState);
-  const [showingSettingPage, setShowingSettingPage] = useRecoilState(
-    showingSettingPageState
-  );
-  const [showingEllipsisModal, setShowingEllipsisModal] = useRecoilState(
-    showingEllipsisModalState
-  );
-  const toggleSettingPage = () => setShowingSettingPage((prev) => !prev);
-  const toggleEllipsisModal = () => setShowingEllipsisModal((prev) => !prev);
+  const showingSettingPage = useRecoilValue(showingSettingPageState);
   return (
     <Container>
       <MainBox isDark={isDark}>
@@ -103,20 +68,10 @@ function Frame() {
           animate="animate"
         >
           <Home />
-          {showingSettingPage && (
-            <HomeOverlay
-              onClick={toggleSettingPage}
-              variants={homeOverlayVariants}
-              initial="initial"
-              animate="animate"
-            />
-          )}
           <Setting />
+          <Overlay />
         </Pages>
       </MainBox>
-      {showingEllipsisModal && (
-        <ContainerOverlay onClick={toggleEllipsisModal} />
-      )}
       <CreateToDo />
     </Container>
   );

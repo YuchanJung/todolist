@@ -101,6 +101,10 @@ function ToDo({ toDo, index }: IToDoProps) {
   const [showingEllipsisModal, setShowingEllipsisModal] = useRecoilState(
     showingEllipsisModalState
   );
+  const toggleThisEllipsis = () => {
+    setClickedThisEllipsis((prev) => !prev);
+    setShowingEllipsisModal((prev) => !prev);
+  }
   const { task, id, category, checked, date } = toDo;
   const setAllToDos = useSetRecoilState(allToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
@@ -136,12 +140,7 @@ function ToDo({ toDo, index }: IToDoProps) {
           <DragBox {...provided.dragHandleProps}>
             <DragButton />
           </DragBox>
-          <Ellipsis
-            onClick={() => {
-              setClickedThisEllipsis((prev) => !prev);
-              setShowingEllipsisModal((prev) => !prev);
-            }}
-          >
+          <Ellipsis onClick={toggleThisEllipsis}>
             <EllipsisVerticalIcon />
           </Ellipsis>
           <AnimatePresence>
