@@ -20,8 +20,8 @@ const Box = styled(motion.div)`
   box-shadow: rgba(15, 15, 18, 0.25) 0px 4px 8px -2px,
     rgba(15, 15, 18, 0.08) 0px 0px 0px 1px;
   width: 150px;
-  height: 60px;
-  min-height: 60px;
+  height: 65px;
+  min-height: 65px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -50,12 +50,12 @@ const boxVariants: Variants = {
   },
 };
 
-const Div = styled.div`
+const Row = styled.div`
   width: 100%;
   height: 20px;
   display: flex;
   align-items: center;
-  padding: 0px 7px;
+  padding: 0px 8px;
   margin: 3px 0px;
 `;
 
@@ -108,18 +108,18 @@ function EllipsisContents({ id }: IEllipsisContents) {
       exit="exit"
       transition={{ type: "tween", duration: 0.1 }}
     >
-      <Div>
+      <Row>
         <DeleteButton onClick={onDelete}>
           <XIcon />
         </DeleteButton>
         <Span>Delete Task</Span>
-      </Div>
-      <Div>
+      </Row>
+      <Row>
         <MagnifyButton>
           <MagnifyingGlassIcon />
         </MagnifyButton>
         <Span>About Task</Span>
-      </Div>
+      </Row>
     </Box>
   );
 }
