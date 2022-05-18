@@ -14,7 +14,6 @@ import {
   TODOS_KEY,
 } from "../../atom";
 import BarsIcon from "../Icons/BarsIcon";
-import CreateToDo from "./CreateToDo";
 import SelectDate from "./SelectDate";
 import ToDoList from "./ToDoList";
 
@@ -25,22 +24,12 @@ const Wrapper = styled(motion.div)`
   background-color: ${(props) => props.theme.background.home};
 `;
 
-const wrapperVariants: Variants = {
-  animate: (showingBar: boolean) => ({
-    borderTopRightRadius: showingBar ? 0 : 35,
-    borderBottomRightRadius: showingBar ? 0 : 35,
-    transition: {
-      duration: 0.3,
-    },
-  }),
-};
-
 const Header = styled.header`
-  height: 20%;
+  height: 15%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 20px;
+  margin: 10px 20px 5px 20px;
 `;
 
 const Title = styled.h1`
@@ -66,6 +55,8 @@ const Contents = styled.div`
   position: relative;
 `;
 
+const ContentsTitle = styled.div``;
+
 const CreateButton = styled(motion.button)`
   position: absolute;
   bottom: -30px;
@@ -75,6 +66,16 @@ const CreateButton = styled(motion.button)`
   background-color: ${(props) => props.theme.background.checkBox};
   font-size: 16px;
 `;
+
+const wrapperVariants: Variants = {
+  animate: (showingCreatePage: boolean) => ({
+    scale: showingCreatePage ? 0.93 : 1,
+    borderRadius: showingCreatePage ? 15 : 0,
+    transition: {
+      duration: 0.3,
+    },
+  }),
+};
 
 function updateAllToDos(savedAllToDos: string, dateKey: number) {
   const tempAllToDos: IAllToDos = { ...JSON.parse(savedAllToDos) };
@@ -92,10 +93,10 @@ function updateAllToDos(savedAllToDos: string, dateKey: number) {
 function Home() {
   const [allToDos, setAllToDos] = useRecoilState(allToDosState);
   const [isDark, setIsDark] = useRecoilState(isDarkState);
-  const setShowingCreatePage = useSetRecoilState(showingCreatePageState);
-  const [showingSettingPage, setShowingSettingPage] = useRecoilState(
-    showingSettingPageState
+  const [showingCreatePage, setShowingCreatePage] = useRecoilState(
+    showingCreatePageState
   );
+  const setShowingSettingPage = useSetRecoilState(showingSettingPageState);
   const date = useRecoilValue(dateState);
   const dateKey = returnDateKey(date);
   const toDosByDate = allToDos[dateKey];
@@ -117,8 +118,8 @@ function Home() {
   // const toDosByCat = useRecoilValue(toDosCatSelector);
   return (
     <Wrapper
-      custom={showingSettingPage}
       variants={wrapperVariants}
+      custom={showingCreatePage}
       animate="animate"
     >
       <Header>
@@ -130,7 +131,6 @@ function Home() {
       {/*<SelectCategory />*/}
       <Contents>
         <SelectDate />
-        <CreateToDo />
         {toDosByDate && <ToDoList />}
         <CreateButton onClick={toggleCreatePage}>New Task</CreateButton>
       </Contents>

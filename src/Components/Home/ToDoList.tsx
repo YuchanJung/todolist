@@ -16,7 +16,7 @@ const Wrapper = styled(motion.div)`
   width: 100%;
   height: 240px;
   position: absolute;
-  top: 90px;
+  top: 60px;
 `;
 
 const ToDoBoard = styled.div`

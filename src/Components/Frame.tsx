@@ -25,6 +25,7 @@ const MainBox = styled.div<{ isDark: boolean }>`
   height: 500px;
   border-radius: 35px;
   background-color: ${(props) => props.theme.background.home};
+  position: relative;
   overflow: hidden;
   ${(props) =>
     props.isDark
@@ -42,7 +43,7 @@ const Pages = styled(motion.div)`
   // Home + Setting
   width: 680px;
   height: 500px;
-  background-color: ${(props) => props.theme.background.setting};
+  background-color: black;
   display: flex;
 `;
 
@@ -69,10 +70,10 @@ function Frame() {
         >
           <Home />
           <Setting />
+          <CreateToDo />
           <Overlay />
         </Pages>
       </MainBox>
-      <CreateToDo />
     </Container>
   );
 }
