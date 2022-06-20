@@ -29,27 +29,6 @@ const Box = styled(motion.div)`
   z-index: 1;
 `;
 
-const boxVariants: Variants = {
-  initial: {
-    x: 10,
-    y: -10,
-    scale: 0.8,
-    opacity: 0,
-  },
-  animate: {
-    x: 0,
-    y: 0,
-    scale: 1,
-    opacity: 1,
-  },
-  exit: {
-    x: 10,
-    y: -10,
-    scale: 0.8,
-    opacity: 0,
-  },
-};
-
 const Row = styled.div`
   width: 100%;
   height: 20px;
@@ -73,11 +52,26 @@ const DeleteButton = styled.button`
 
 const MagnifyButton = styled(DeleteButton)``;
 
+const boxVariants: Variants = {
+  hidden: {
+    x: 10,
+    y: -10,
+    scale: 0.8,
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    y: 0,
+    scale: 1,
+    opacity: 1,
+  },
+};
+
 interface IEllipsisContents {
   id: number;
 }
 
-function deletedToDos(oldToDos: IToDo[], targetIndex: number) {
+function returnDeletedToDos(oldToDos: IToDo[], targetIndex: number) {
   return [
     ...oldToDos.slice(0, targetIndex),
     ...oldToDos.slice(targetIndex + 1),
@@ -87,11 +81,11 @@ function deletedToDos(oldToDos: IToDo[], targetIndex: number) {
 function EllipsisContents({ id }: IEllipsisContents) {
   const setAllToDos = useSetRecoilState(allToDosState);
   const dateKey = returnDateKey(useRecoilValue(dateState));
-  const onDelete = () => {
+  const deleteToDo = () => {
     setAllToDos((prevAllToDos) => {
       const oldToDos = prevAllToDos[dateKey].toDos;
       const targetIndex = oldToDos.findIndex((td) => td.id === id);
-      const newToDos = deletedToDos(oldToDos, targetIndex);
+      const newToDos = returnDeletedToDos(oldToDos, targetIndex);
       const newAllToDos: IAllToDos = {
         ...prevAllToDos,
         [dateKey]: { toDos: newToDos },
@@ -103,13 +97,13 @@ function EllipsisContents({ id }: IEllipsisContents) {
   return (
     <Box
       variants={boxVariants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
       transition={{ type: "tween", duration: 0.1 }}
     >
       <Row>
-        <DeleteButton onClick={onDelete}>
+        <DeleteButton onClick={deleteToDo}>
           <XIcon />
         </DeleteButton>
         <Span>Delete Task</Span>

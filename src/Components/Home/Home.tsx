@@ -101,7 +101,7 @@ function Home() {
   const dateKey = returnDateKey(date);
   const toDosByDate = allToDos[dateKey];
   const toggleCreatePage = () => setShowingCreatePage((prev) => !prev);
-  const toggleEllipsisModal = () => setShowingSettingPage((prev) => !prev);
+  const toggleSettingPage = () => setShowingSettingPage((prev) => !prev);
   useEffect(() => {
     // first rendering
     const savedAllToDos = localStorage.getItem(TODOS_KEY);
@@ -124,7 +124,7 @@ function Home() {
     >
       <Header>
         <Title>{toDosByDate ? toDosByDate.toDos.length : 0} Tasks</Title>
-        <SettingButton onClick={toggleEllipsisModal}>
+        <SettingButton onClick={toggleSettingPage}>
           <BarsIcon />
         </SettingButton>
       </Header>
